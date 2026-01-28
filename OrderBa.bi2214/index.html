@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8" />
+<title>Онцгой өдөр</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESET & BASE STYLES (Dark Dreamy Theme)
+   ═══════════════════════════════════════════════════════════════════════════ */
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  height: 100vh;
+  overflow: hidden;
+  /* Гүн хөх, ягаан туяатай үдшийн тэнгэр */
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+  color: #fff; /* Текст цагаан өнгөтэй */
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BACKGROUND ANIMATION (Twinkling Stars)
+   ═══════════════════════════════════════════════════════════════════════════ */
+.stars-container {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 0; overflow: hidden;
+}
+.star {
+  position: absolute;
+  width: 2px; height: 2px;
+  background: #fff; border-radius: 50%;
+  box-shadow: 0 0 4px #fff, 0 0 8px #fff; /* Гэрэлтэх эффект */
+  opacity: 0;
+  animation: twinkle var(--duration, 5s) infinite ease-in-out;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   START OVERLAY (To trigger audio)
+   ═══════════════════════════════════════════════════════════════════════════ */
+.start-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(10, 10, 20, 0.95);
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  transition: opacity 0.8s;
+}
+.start-btn {
+  padding: 15px 40px; font-size: 20px;
+  background: linear-gradient(135deg, #a6c0fe, #f68084);
+  border: none; border-radius: 50px; color: #fff;
+  box-shadow: 0 0 20px rgba(166, 192, 254, 0.5);
+  cursor: pointer; animation: pulseBtn 2s infinite;
+}
+@keyframes pulseBtn { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   APP STRUCTURE
+   ═══════════════════════════════════════════════════════════════════════════ */
+.app { position: relative; width: 100%; height: 100%; z-index: 5; }
+
+.page {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  padding: 20px; opacity: 0; pointer-events: none;
+  transform: translateY(20px) scale(0.95);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.page.active {
+  opacity: 1; pointer-events: auto; transform: translateY(0) scale(1);
+}
+.page.scrollable {
+  justify-content: flex-start; overflow-y: auto;
+  padding-top: 50px; padding-bottom: 50px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   THE GLOWING DARK BOX
+   ═══════════════════════════════════════════════════════════════════════════ */
+.box {
+  /* Хагас тунгалаг хар шилэн эффект */
+  background: rgba(30, 30, 50, 0.65);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-radius: 30px; padding: 40px 30px;
+  max-width: 550px; width: 100%; text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  /* Гадна талын гэрэлтэх эффект */
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(100, 150, 255, 0.2) inset;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TYPOGRAPHY & BUTTONS (Adapted for dark theme)
+   ═══════════════════════════════════════════════════════════════════════════ */
+h1, h2 {
+  font-family: 'Pacifico', cursive; font-weight: 400;
+  /* Алтлаг, ягаан туяатай цагаан өнгө */
+  color: #ffd1dc;
+  text-shadow: 0 2px 10px rgba(255, 100, 150, 0.5);
+  margin-bottom: 15px;
+}
+h1 { font-size: 36px; } h2 { font-size: 28px; }
+p { font-size: 16px; line-height: 1.7; color: #d0d0e0; margin-bottom: 20px; }
+
+.nav-btn {
+  border: none; border-radius: 50px;
+  padding: 14px 36px;
+  /* Гэрэлтсэн товчлуур */
+  background: linear-gradient(135deg, #6a85b6, #bac8e0);
+  color: #1a2a4a; font-size: 16px; font-weight: 600;
+  cursor: pointer; box-shadow: 0 8px 25px rgba(106, 133, 182, 0.5);
+  transition: 0.3s; margin-top: 10px;
+}
+.nav-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(106, 133, 182, 0.7); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ELEMENTS
+   ═══════════════════════════════════════════════════════════════════════════ */
+.gift-emoji {
+  font-size: 80px; cursor: pointer; display: inline-block;
+  filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5)); /* Алтан сүүдэр */
+  animation: floatEmoji 3s ease-in-out infinite;
+}
+@keyframes floatEmoji { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-15px)} }
+
+/* Flip Cards - Dark theme */
+.card-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 20px; }
+.flip-card { width: 100%; aspect-ratio: 1; perspective: 1000px; cursor: pointer; }
+.flip-inner { width: 100%; height: 100%; transition: 0.6s; transform-style: preserve-3d; position: relative; }
+.flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+.flip-front, .flip-back {
+  position: absolute; inset: 0; border-radius: 15px;
+  display: flex; align-items: center; justify-content: center;
+  backface-visibility: hidden; font-size: 14px;
+}
+.flip-front { 
+  background: rgba(255,255,255,0.1); color: #ec083e; font-size: 24px;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.flip-back {
+  background: linear-gradient(135deg, #fe55c6, #ffe4e1);
+  color: #5a3a4a; transform: rotateY(180deg); font-weight: 600;
+}
+
+/* Albums */
+.album-grid, .video-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+.album-grid img, .video-thumb {
+  width: 100%; height: 180px; object-fit: cover; border-radius: 15px;
+  cursor: pointer; border: 2px solid rgba(255,255,255,0.1);
+  transition: 0.3s;
+}
+.album-grid img:hover, .video-thumb:hover { border-color: #ffd1dc; transform: scale(1.03); }
+.video-thumb { position: relative; overflow: hidden; }
+.video-thumb::after {
+  content: "▶"; position: absolute; inset: 0; display: flex;
+  align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.4); color: #fff; font-size: 40px;
+}
+
+/* Letter Paper - Glowing parchment style */
+.long-letter {
+  background: repeating-linear-gradient( #fffef8, #fffef8 28px, #eaddca 29px );
+  color: #4a3b2a;
+  border-radius: 20px;
+  padding: 30px;
+  text-align: justify;
+  line-height: 29px;
+  box-shadow: 0 0 40px rgba(255, 230, 150, 0.3);
+  hyphens: auto;
+}
+
+
+
+/* Lightbox */
+.lightbox {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(0,0,0,0.9); display: none;
+  justify-content: center; align-items: center; padding: 20px;
+}
+.lightbox img, .lightbox video { max-width: 100%; max-height: 90vh; border-radius: 10px; box-shadow: 0 0 50px rgba(255,255,255,0.2); }
+
+@media (max-width: 600px) {
+  .box { padding: 30px 20px; }
+  h1 { font-size: 28px; }
+  .card-grid { grid-template-columns: repeat(3, 1fr); }
+  .album-grid img, .video-thumb { height: 140px; }
+}
+
+.time-box {
+  background: rgba(255,255,255,0.12);
+  padding: 12px 16px;
+  border-radius: 12px;
+  min-width: 70px;
+}
+.time-box span {
+  font-size: 22px;
+  font-weight: 600;
+  display: block;
+}
+.time-box small {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+/* ✨ Romantic Glowing Button */
+button {
+  margin-top: 25px;
+  padding: 14px 40px;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  color: #1a2a4a;
+
+  background: linear-gradient(135deg, #ffd1dc, #cbb4ff);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 25px rgba(255, 209, 220, 0.45),
+    0 0 20px rgba(203, 180, 255, 0.4);
+
+  transition: all 0.35s ease;
+}
+
+/* Hover */
+button:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow:
+    0 14px 35px rgba(255, 209, 220, 0.7),
+    0 0 30px rgba(203, 180, 255, 0.7);
+}
+
+/* Click */
+button:active {
+  transform: scale(0.97);
+  box-shadow:
+    0 6px 18px rgba(255, 209, 220, 0.5);
+}
+</style>
+</head>
+<body>
+
+<audio id="bgSound" loop>
+  <source src="audio/backgroundsound.mp3" type="audio/mpeg">
+</audio>
+
+<div class="stars-container" id="stars"></div>
+
+<div class="start-overlay" id="startScreen">
+  <h1 style="color:white; margin-bottom:30px;"> Чамдаа хязгааргүй их хайртай шүү ✨</h1>
+  <button class="start-btn" onclick="startExperience()">Эхлүүлэх 🎵</button>
+</div>
+
+<div class="app">
+  <section class="page active">
+    <div class="box">
+      <h1 id="recipientName">Хайртдаа зориулав</h1>
+      <p>Одод түгсэн энэ үдшийн мэндийг хүргэе. Бэлгээ нээгээрэй 🌙</p>
+      <div class="gift-emoji" onclick="nextPage()">🎁</div>
+    </div>
+  </section>
+
+  <section class="page">
+    <div class="box">
+      <div class="gift-emoji" onclick="nextPage()">✨</div>
+      <h2>Гайхамшиг хүлээж байна</h2>
+      <p>Энэ үдшийг чамдаа зориулж бэлдлээ. Цааш үргэлжлүүлэх үү?</p>
+      <button class="nav-btn" onclick="nextPage()">Тийм ээ, үзье! 💖</button>
+    </div>
+  </section>
+
+  <section class="page">
+    <div class="box">
+      <h2>Карт бүрийн цаана</h2>
+      <p> нуугдсан үгсийг олоорой</p>
+      <div class="card-grid" id="cardGrid"></div>
+      <button class="nav-btn" onclick="nextPage()">Дараагийн хэсэг 🥰</button>
+    </div>
+  </section>
+
+  <!-- <section class="page scrollable">
+    <div class="box">
+      <h2>Бидний Гэрэлт Дурсамжууд 📸</h2>
+      <p>Хамтдаа бүтээсэн нандин мөчүүд...</p>
+      <div class="album-grid" id="photoAlbum"></div>
+      <button class="nav-btn" onclick="nextPage()"> 🎥</button>
+    </div>
+  </section> -->
+
+  <!-- <section class="page scrollable">
+    <div class="box">
+      <h2>Сэтгэлд хоногшсон мөчүүд</h2>
+      <p>Дахин дахин үзээд л баймаар...</p>
+      <div class="video-grid" id="videoAlbum"></div>
+      <button class="nav-btn" onclick="nextPage()"> 💌</button>
+    </div>
+  </section> -->
+
+
+  <!-- count up timer shu -->
+<section class="page">
+  <div class="box">
+    <h2>Бидний хамтдаа өнгөрүүлсэн хугацаа ⏳</h2>
+<p>2025 оны 5 сарын 14-с хойш…</p>
+
+
+    <div id="countdown" style="display:flex; gap:15px; justify-content:center; margin-top:20px;">
+      <div class="time-box">
+        <span id="days">0</span>
+        <small>Өдөр</small>
+      </div>
+      <div class="time-box">
+        <span id="hours">0</span>
+        <small>Цаг</small>
+      </div>
+      <div class="time-box">
+        <span id="minutes">0</span>
+        <small>Минут</small>
+      </div>
+      <div class="time-box">
+        <span id="seconds">0</span>
+        <small>Секунд</small>
+      </div>
+    </div>
+
+    <button onclick="goNext()"> ЗАХИДАЛ 💌</button>
+  </div>
+</section>
+
+  <section class="page scrollable">
+    <div class="box" style="background: rgba(30, 30, 50, 0.8);">
+      <h2>Миний сэтгэлийн үгс 🌙</h2>
+      <div class="long-letter" id="mainLetter"></div>
+      <button class="nav-btn" onclick="nextPage()"> ❤️</button>
+    </div>
+  </section>
+
+  <section class="page">
+    <div class="box">
+      <h2> Жаахан л хүлээгээрэй хайрт минь🎂</h2>
+      <p>Чи минь яг л энэ одод шиг миний амьдралыг гэрэлтүүлдэг.</p>
+      <p>Хайртай шүү, үүрд... ❤️</p>
+      <div style="font-size:60px; margin-top:20px; filter: drop-shadow(0 0 15px rgba(255,100,150,0.8));">💏</div>
+    </div>
+  </section>
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <img id="lbImg" style="display:none">
+  <video id="lbVideo" controls style="display:none"></video>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════════════
+// ТОХИРГООНЫ ХЭСЭГ (Энд мэдээллээ солино)
+// ═══════════════════════════════════════════════════════════════════════════
+const config = {
+  recipient: "Миний Гүнжээ ❤️", // Эхний хуудсан дээрх нэр
+  
+  // 10 ширхэг үг (Flip Cards)
+  flipWords: ["Чи", "бол", "миний", "хувьд", "энэ", "ертөнцийн", "хамгийн", "нандин", "эрдэнэ", "юм","шүү", "💖"],
+
+  // Зургийн файлын нэрс (images/ фолдер доторх)
+  images: ["1.jpeg","2.jpeg","3.jpeg","4.jpeg","5.jpeg"],
+  
+  // Видео файлын нэрс (videos/ фолдер доторх)
+  videos: ["video3.mov"],
+
+
+  // Захидлын текст (\n - шинэ мөр)
+  letter: `Энэ захиаг унших өдрийн мэндийг хүргэе 💌😇
+    Хэдий хоёулаа хол байгаа ч гэсэн, уулзах тэр нэг өдрийг тэсэн ядан хүлээж байна 🥰
+    Энд би ядарч, гуниглах үедээ чамайг бодоход бүх уйтгар гуниг үргэж, зүгээр л чамаар дүүрчихдэг юм 😊❤️
+
+    Одоогийн чи бид хоёрын харилцаа тийм биш байгаа ч гэсэн, би үргэлж чамайг л гэх болно 😊🤍
+
+    Хамтдаа бүтээсэн дотно дурсамж одоохондоо байхгүй ч гэсэн 🥺 цаашдаа хамтдаа байхын төлөө эцэс хүртэл хичээх болноо 💕
+
+    Удаан хугацаанд дэвтээгүй сэтгэлийг минь чи л дэвтээж, арчилж байгаа юм шиг санагддаг 💖 ганцхан чамайг л хүлээж, хэн нэгэнд биш — зөвхөн чамд л буулт хиймээр байна 🤭🫶🏼
+
+    Одоо ахиад жаахан л хүлээчихвэл, хоёулаа хамтдаа дахин давтагдашгүй, бас мартагдашгүй дурсамжуудыг хамтдаа бүтээцгээе 🫶🏼💌❤️`
+    };
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ПРОГРАММЫН КОД (Өөрчлөх шаардлагагүй)
+// ═══════════════════════════════════════════════════════════════════════════
+
+// 1. Аудио болон Эхлүүлэх дэлгэц
+const bgSound = document.getElementById('bgSound');
+const startScreen = document.getElementById('startScreen');
+
+function startExperience() {
+  // 1. Overlay-г шууд алга болгоно
+  startScreen.style.opacity = '0';
+  setTimeout(() => startScreen.remove(), 800);
+
+  // 2. Дууг ард нь тоглуулна
+  bgSound.volume = 0.4;
+  bgSound.play().catch(() => {
+    document.body.addEventListener(
+      'click',
+      () => bgSound.play(),
+      { once: true }
+    );
+  });
+}
+
+
+// 2. Одод үүсгэх (Stars)
+const starsCont = document.getElementById('stars');
+for (let i = 0; i < 100; i++) {
+  const star = document.createElement('div');
+  star.className = 'star';
+  star.style.left = Math.random() * 100 + 'vw';
+  star.style.top = Math.random() * 100 + 'vh';
+  // Санамсаргүй хэмжээ болон анивчилт
+  const scale = Math.random() * 0.5 + 0.5;
+  star.style.transform = `scale(${scale})`;
+  star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+  star.style.animationDelay = (Math.random() * 5) + 's';
+  starsCont.appendChild(star);
+}
+
+// 3. Контент дүүргэх
+document.getElementById('recipientName').innerText = config.recipient;
+document.getElementById('mainLetter').innerText = config.letter;
+
+const cardGrid = document.getElementById('cardGrid');
+config.flipWords.forEach(word => {
+  cardGrid.innerHTML += `
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">✨</div>
+        <div class="flip-back">${word}</div>
+      </div>
+    </div>`;
+});
+
+// PHOTO ALBUM
+// const photoAlbum = document.getElementById('photoAlbum');
+// config.images.forEach(img => {
+//   photoAlbum.innerHTML += `<img src="images/${img}" onclick="openLightbox('img', 'images/${img}')">`;
+// });
+
+
+// VIDEO ALBUM
+// const videoAlbum = document.getElementById('videoAlbum');
+// config.videos.forEach(vid => {
+//   videoAlbum.innerHTML += `
+//     <div class="video-thumb" onclick="openLightbox('video', 'videos/${vid}')">
+//       <video src="videos/${vid}" muted playsinline></video>
+//     </div>`;
+// });
+
+// 4. Хуудас шилжилт (Navigation)
+const pages = document.querySelectorAll('.page');
+let current = 0;
+function nextPage() {
+  if(current < pages.length - 1) {
+    pages[current].classList.remove('active');
+    current++;
+    pages[current].classList.add('active');
+  }
+}
+
+function goNext() {
+  nextPage();
+}
+
+// 5. Lightbox
+const lb = document.getElementById('lightbox');
+const lbImg = document.getElementById('lbImg');
+const lbVideo = document.getElementById('lbVideo');
+function openLightbox(type, src) {
+  lb.style.display = 'flex';
+  if(type === 'img') {
+    lbImg.src = src; lbImg.style.display = 'block'; lbVideo.style.display = 'none';
+  } else {
+    lbVideo.src = src; lbVideo.style.display = 'block'; lbImg.style.display = 'none';
+    lbVideo.play();
+  }
+}
+function closeLightbox() {
+  lb.style.display = 'none';
+  lbVideo.pause();
+  lbVideo.currentTime = 0;
+  lbVideo.src = "";
+}
+
+
+
+
+
+/* --------------------------------------------------------------
+   COUNT UP TIMER 
+-------------------------------------------------------------- */
+
+// ⏱ ЭХЛЭХ ОГНОО 
+const startDate = new Date("2025-05-14T00:00:00").getTime();
+
+const daysEl = document.getElementById("days");
+const hoursEl = document.getElementById("hours");
+const minutesEl = document.getElementById("minutes");
+const secondsEl = document.getElementById("seconds");
+
+function updateTimer() {
+  const now = new Date().getTime();
+  const diff = now - startDate;
+
+  if (diff < 0) return; // эхлэх өдрөөс өмнө бол юу ч харуулахгүй
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
+
+  daysEl.innerText = days;
+  hoursEl.innerText = hours;
+  minutesEl.innerText = minutes;
+  secondsEl.innerText = seconds;
+}
+
+updateTimer();
+setInterval(updateTimer, 1000);
+
+
+</script>
+</body>
+</html>
