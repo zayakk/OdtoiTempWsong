@@ -301,21 +301,21 @@ const bgSound = document.getElementById('bgSound');
 const startScreen = document.getElementById('startScreen');
 
 function startExperience() {
-  // Дууг тоглуулна
-  bgSound.volume = 0.4; // Дууг бага зэрэг сулруулна (намуухан байлгах)
-  bgSound.play().then(() => {
-    // Амжилттай болвол эхлэх дэлгэцийг алга болгоно
-    startScreen.style.opacity = '0';
-    setTimeout(() => startScreen.remove(), 800);
-  }).catch(e => {
-    console.log("Audio play failed (browser restriction):", e);
-    // Хэрэв алдаа гарвал (зарим хөтөч дээр) мөн адил дэлгэцийг алга болгоно.
-    startScreen.style.opacity = '0';
-    setTimeout(() => startScreen.remove(), 800);
-    alert("Дууг тоглуулахын тулд дэлгэц дээр дахин нэг товшино уу.");
-    document.body.addEventListener('click', () => bgSound.play(), {once:true});
+  // 1. Overlay-г шууд алга болгоно
+  startScreen.style.opacity = '0';
+  setTimeout(() => startScreen.remove(), 400);
+
+  // 2. Дууг ард нь тоглуулна
+  bgSound.volume = 0.4;
+  bgSound.play().catch(() => {
+    document.body.addEventListener(
+      'click',
+      () => bgSound.play(),
+      { once: true }
+    );
   });
 }
+
 
 // 2. Одод үүсгэх (Stars)
 const starsCont = document.getElementById('stars');
