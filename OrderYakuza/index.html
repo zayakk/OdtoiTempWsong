@@ -3,55 +3,88 @@
 <head>
 <meta charset="UTF-8" />
 <title>Бидний хайрын сайт</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+  height:100%;
+}
+
 body{
   font-family:'Poppins',sans-serif;
-  height:100vh;
-  overflow:hidden;
   background:radial-gradient(circle at top,#ffffff,#eef4ff,#dde9ff);
   color:#2e3a52;
 }
 
-/* SNOW */
+/* ❄️ SNOW */
+.snow{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+}
 .snow span{
-  position:absolute;top:-10px;
-  width:9px;height:9px;
-  background:white;border-radius:50%;
-  filter:blur(.4px);
+  position:absolute;
+  top:-10px;
+  width:8px;
+  height:8px;
+  background:white;
+  border-radius:50%;
+  opacity:.85;
+  filter:blur(.3px);
   animation:snowFall linear infinite;
 }
 @keyframes snowFall{
-  to{transform:translateY(110vh) translateX(50px)}
+  to{transform:translateY(110dvh) translateX(30px)}
 }
 
 /* APP */
-.app{position:relative;width:100%;height:100%}
+.app{
+  position:relative;
+  min-height:100dvh;
+  overflow:hidden;
+  z-index:1;
+}
+
+/* PAGE */
 .page{
-  position:absolute;inset:0;
-  display:flex;justify-content:center;align-items:center;
-  padding:24px;
-  opacity:0;pointer-events:none;
-  transform:scale(.97);
-  transition:.8s;
+  position:absolute;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:16px;
+  opacity:0;
+  pointer-events:none;
+  transform:scale(.96);
+  transition:.6s ease;
 }
 .page.active{
-  opacity:1;pointer-events:auto;
+  opacity:1;
+  pointer-events:auto;
   transform:scale(1);
 }
 
 /* BOX */
 .box{
   background:rgba(255,255,255,.96);
-  border-radius:30px;
-  padding:38px;
-  max-width:560px;width:100%;
+  border-radius:26px;
+  padding:24px;
+  width:100%;
+  max-width:520px;
   text-align:center;
-  box-shadow:0 40px 90px rgba(120,160,255,.3);
+  box-shadow:0 30px 70px rgba(120,160,255,.28);
+  position:relative;
+  z-index:2;
 }
 
 /* TEXT */
@@ -59,225 +92,122 @@ h1,h2{
   font-family:'Pacifico',cursive;
   color:#4f7fdc;
 }
-h1{font-size:36px}
-h2{font-size:30px}
-p{font-size:17px;line-height:1.9}
+h1{font-size:30px}
+h2{font-size:24px}
+p{font-size:16px;line-height:1.7}
 
 /* BUTTON */
 button{
   margin-top:16px;
-  border:none;border-radius:999px;
-  padding:14px 38px;
+  border:none;
+  border-radius:999px;
+  padding:12px 32px;
   background:linear-gradient(135deg,#dbe8ff,#f7fbff);
   cursor:pointer;
-  box-shadow:0 12px 28px rgba(120,160,255,.45);
+  box-shadow:0 10px 24px rgba(120,160,255,.35);
 }
 
-/* GIFT */
-.gift{font-size:90px;cursor:pointer;animation:bounce 1.6s infinite}
-@keyframes bounce{50%{transform:translateY(-12px)}}
-
-/* LETTER */
-.letter-page audio{width:100%;margin:18px 0}
-.letters{position:relative;min-height:110px}
-.letter{
-  position:absolute;inset:0;
-  opacity:0;transform:translateY(12px);
-  transition:.6s;
+/* 💌 */
+.gift{
+  font-size:72px;
+  cursor:pointer;
+  animation:bounce 1.6s infinite;
 }
-.letter.active{opacity:1;transform:none}
-
-/* ===== ROTATING IMAGES ===== */
-.rotator{
-  position:relative;
-  width:260px;
-  height:260px;
-  margin:30px auto;
-  animation:spin 18s linear infinite;
+@keyframes bounce{
+  50%{transform:translateY(-10px)}
 }
 
-.rotator img{
-  position:absolute;
-  width:120px;
-  height:120px;
-  object-fit:cover;
-  border-radius:18px;
-  box-shadow:0 12px 28px rgba(120,160,255,.4);
-  top:50%;
-  left:50%;
-  transform-origin:-70px center;
+/* ✨ GLOW */
+.glow-text{
+  color:#fb7185;
+  text-shadow:0 0 6px rgba(251,113,133,.6),
+              0 0 18px rgba(251,113,133,.4);
+  animation:glow 2.5s ease-in-out infinite alternate;
+}
+@keyframes glow{
+  from{opacity:.7}
+  to{opacity:1}
 }
 
-/* байрлал */
-.rotator img:nth-child(1){transform:rotate(0deg) translateX(120px)}
-.rotator img:nth-child(2){transform:rotate(72deg) translateX(120px)}
-.rotator img:nth-child(3){transform:rotate(144deg) translateX(120px)}
-.rotator img:nth-child(4){transform:rotate(216deg) translateX(120px)}
-.rotator img:nth-child(5){transform:rotate(288deg) translateX(120px)}
-
-@keyframes spin{
-  from{transform:rotate(0deg)}
-  to{transform:rotate(360deg)}
-}
-
-/* ===== GOLD ORBIT ===== */
+/* 🪐 ORBIT */
 .orbit-wrapper{
   position:relative;
-  width:360px;
-  height:360px;
-  margin:auto;
-}
-
-.gold-orbit{
-  position:absolute;
-  inset:0;
-  animation:spin 22s linear infinite;
-}
-
-.gold-orbit img{
-  position:absolute;
-  width:90px;
-  height:90px;
-  object-fit:cover;
-  border-radius:50%;
-  border:3px solid #f5d27a;
-  box-shadow:
-    0 0 15px rgba(255,215,100,.9),
-    0 0 35px rgba(255,215,120,.6);
-  top:50%;
-  left:50%;
-  transform-origin:-140px center;
-}
-
-/* байрлал */
-.gold-orbit img:nth-child(1){transform:rotate(0deg) translateX(140px)}
-.gold-orbit img:nth-child(2){transform:rotate(72deg) translateX(140px)}
-.gold-orbit img:nth-child(3){transform:rotate(144deg) translateX(140px)}
-.gold-orbit img:nth-child(4){transform:rotate(216deg) translateX(140px)}
-.gold-orbit img:nth-child(5){transform:rotate(288deg) translateX(140px)}
-
-@keyframes spin{
-  from{transform:rotate(0deg)}
-  to{transform:rotate(360deg)}
-}
-
-.gold-orbit{
-  z-index:1;
-}
-
-.box{
-  position:relative;
-  z-index:2;
-}
-
-/* STATIC PHOTOS INSIDE BOX */
-.static-photos{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-  margin:20px 0;
-}
-
-.static-photos img{
-  width:100%;
-  height:90px;
-  object-fit:cover;
-  border-radius:14px;
-  box-shadow:0 6px 16px rgba(120,160,255,.35);
-}
-/* ===== IMAGE MODAL ===== */
-.image-modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.75);
+  width:min(280px,90vw);
+  height:min(280px,90vw);
   display:flex;
   justify-content:center;
   align-items:center;
-  opacity:0;
-  pointer-events:none;
-  transition:.4s;
-  z-index:999;
 }
-
-.image-modal.active{
-  opacity:1;
-  pointer-events:auto;
+.gold-orbit{
+  position:absolute;
+  inset:0;
+  animation:spin 24s linear infinite;
+  z-index:1;
 }
-
-.image-modal img{
-  max-width:90%;
-  max-height:85%;
-  border-radius:20px;
-  box-shadow:0 30px 80px rgba(0,0,0,.6);
-  animation:zoomIn .4s ease;
+.gold-orbit img{
+  position:absolute;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  object-fit:cover;
+  border:3px solid #f5d27a;
+  box-shadow:0 0 16px rgba(255,215,120,.6);
+  top:50%;
+  left:50%;
+  transform-origin:-95px center;
 }
+.gold-orbit img:nth-child(1){transform:rotate(0deg) translateX(95px)}
+.gold-orbit img:nth-child(2){transform:rotate(60deg) translateX(95px)}
+.gold-orbit img:nth-child(3){transform:rotate(120deg) translateX(95px)}
+.gold-orbit img:nth-child(4){transform:rotate(180deg) translateX(95px)}
+.gold-orbit img:nth-child(5){transform:rotate(240deg) translateX(95px)}
+.gold-orbit img:nth-child(6){transform:rotate(300deg) translateX(95px)}
 
-@keyframes zoomIn{
-  from{transform:scale(.8)}
-  to{transform:scale(1)}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* 🖼 STATIC PHOTOS */
+.static-photos{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin:14px 0;
 }
 .static-photos img{
-  cursor:pointer;
+  width:100%;
+  height:80px;
+  object-fit:cover;
+  border-radius:12px;
 }
 
-/* FINAL LETTER SCROLL – TALLER BOX */
+/* 📨 LETTER SCROLL */
 .letter-page .box{
-  max-height:80vh;        /* өмнө нь 80vh байсан */
-  min-height:70vh;        /* доод хязгаар */
+  max-height:80dvh;
   display:flex;
   flex-direction:column;
 }
-.letter-page1 .box{
-  max-height:88vh;        /* өмнө нь 80vh байсан */
-  min-height:70vh;        /* доод хязгаар */
-  display:flex;
-  flex-direction:column;
+.letters{
+  overflow-y:auto;
+  padding-right:6px;
+  -webkit-overflow-scrolling:touch;
+    padding-right:6px;
 }
-
-
-.letter-page .letters{
-  flex:1;
-  overflow-y:auto;          /* дотроо scroll */
-  padding-right:8px;
+.letter + .letter{
+  margin-top:12px;
 }
-
-/* scroll bar cute болгох */
-.letter-page .letters::-webkit-scrollbar{
-  width:6px;
+.letter{
+  display:none;
+  text-align:justify;
+  line-height:1.8;
 }
-.letter-page .letters::-webkit-scrollbar-thumb{
-  background:rgba(120,160,255,.4);
-  border-radius:10px;
+.letter.active{
+  display:block;
 }
-.glow-text {
-  color: #fb7185; /* rose-400 */
-  text-align: center;
-  line-height: 1.7;
-  font-weight: 500;
-
-  text-shadow:
-    0 0 5px rgba(251, 113, 133, 0.6),
-    0 0 10px rgba(251, 113, 133, 0.5),
-    0 0 20px rgba(251, 113, 133, 0.4),
-    0 0 40px rgba(251, 113, 133, 0.25);
+/* 📱 MOBILE */
+@media(max-width:480px){
+  h1{font-size:26px}
+  h2{font-size:22px}
+  p{font-size:15px}
 }
-@keyframes glow {
-  0% {
-    text-shadow:
-      0 0 5px rgba(251, 113, 133, 0.4),
-      0 0 15px rgba(251, 113, 133, 0.3);
-  }
-  100% {
-    text-shadow:
-      0 0 10px rgba(251, 113, 133, 0.7),
-      0 0 30px rgba(251, 113, 133, 0.5);
-  }
-}
-
-.glow-text {
-  animation: glow 2.5s ease-in-out infinite alternate;
-}
-
 </style>
 </head>
 
@@ -287,12 +217,11 @@ button{
 
 <div class="app">
 
-<!-- PAGE 1 -->
 <section class="page active">
   <div class="box">
-    <h1>Маш их санаж байна 🎄❤️</h1>
+    <h1>Маш их санаж байна ✨❤️</h1>
     <p>Чамд зориулсан жижигхэн бэлэг</p>
-    <div class="gift" onclick="nextPage()">🎄</div>
+    <div class="gift" onclick="nextPage()">💌</div>
   </div>
 </section>
 
@@ -389,24 +318,18 @@ button{
     <h2>Чамд зориулсан захиа 💖</h2>
 <br>
     <div class="letters" style="position:relative">
-      <p class="letter active">
+      <p style="text-align: justify;" class="letter active">
         Өнөөдрийн мэнд, хайрт минь. 🤍<br><br>
         
         Надтай үргэлж хамт байж, намайг ойлгож, дэргэд минь түшиг болж явдагт 
         чинь үнэхээр их баярлалаа. Чиний халуун дулаан сэтгэл, анхаарал халамж надад 
         асар их хүч өгдөг шүү. Чамдаа чин сэтгэлээсээ хайртай шүү ❤️🥺
-      </p>
-
-      <p class="letter">
         Намайг үггүйгээр ойлгож, инээмсэглэлээрээ тайвшруулж, ямар ч үед дэргэд
          минь байж чаддагт чинь би өдөр бүр талархдаг шүү. Чиний оршихуй надад итгэл, амар амгаланг өгдөг. 🌙✨
       </p>
-
+      
       <p class="letter">
-       Чиний халамж, анхаарал, чин сэтгэл надад хамгийн үнэтэй бэлэг 💫
-      </p>
-
-      <p class="letter">
+        Чиний халамж, анхаарал, чин сэтгэл надад хамгийн үнэтэй бэлэг 💫
         Би чиний хажууд л өөрийгөө жинхэнэ утгаараа аз жаргалтай мэдэрдэг. Чамдаа чин сэтгэлээсээ хайртай шүү.
 
         Үргэлж
