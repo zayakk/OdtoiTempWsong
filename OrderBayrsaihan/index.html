@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>☁️ Чамд хэлэх үг байна</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Pacifico&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --rose:#ff6ea9;
+  --pink:#ffc1dc;
+  --hot:#ff4d8d;
+  --ink:#3a2c34;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Poppins,system-ui;
+  background:linear-gradient(180deg,#fff0f6,#ffe4ef,#fff);
+  color:var(--ink);
+}
+
+.wrap{max-width:960px;margin:auto;padding:18px}
+.center{display:flex;flex-direction:column;align-items:center;gap:20px}
+
+/* CARD */
+.card{
+  width:100%;
+  max-width:340px;
+  background:#fff;
+  border-radius:22px;
+  padding:22px;
+  box-shadow:0 20px 50px rgba(244,114,182,.2);
+  text-align:center;
+}
+.ribbon{
+  background:linear-gradient(90deg,var(--rose),var(--pink));
+  color:#fff;
+  padding:10px;
+  border-radius:12px;
+  font-weight:600;
+}
+.gift{
+  width:140px;height:140px;
+  margin:18px auto;
+  border-radius:20px;
+  background:linear-gradient(135deg,#ff6ea9,#ff9acb);
+  box-shadow:0 12px 30px rgba(255,110,169,.5);
+  display:flex;align-items:center;justify-content:center;
+  font-size:52px;color:#fff;
+  cursor:pointer;
+  transition:.4s;
+}
+.gift.shrink{transform:scale(.2);opacity:0}
+
+/* SECTION */
+.section{
+  display:none;
+  width:100%;
+  background:#fff;
+  border-radius:20px;
+  padding:22px;
+  box-shadow:0 20px 60px rgba(255,110,169,.25);
+}
+.section.show{display:block}
+.section h2{
+  font-family:Pacifico;
+  color:var(--rose);
+  margin-top:0;
+}
+.section p{
+  line-height:1.8;
+  font-size:15px;
+  text-align: justify; 
+}
+
+/* GALLERY */
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+@media(min-width:700px){
+  .gallery{grid-template-columns:repeat(4,1fr)}
+}
+.photo{
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+.photo img{
+  width:100%;
+  height:160px;
+  object-fit:cover;
+}
+.caption{
+  padding:8px;
+  font-size:13px;
+  background:#fff;
+}
+
+/* BUTTONS */
+.buttons{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-top:18px;
+}
+.buttons button{
+  padding:14px;
+  border-radius:999px;
+  border:none;
+  font-weight:600;
+  cursor:pointer;
+  font-size:15px;
+}
+
+.yes{
+  background:linear-gradient(135deg,#ff6ea9,#ff9acb);
+  color:#fff;
+  box-shadow:0 8px 20px rgba(255,110,169,.4);
+}
+
+.no{
+  background:#ffe4ef;
+  color:#a03c63;
+}
+
+
+/* RESPONSE */
+.response{
+  display:none; /* ⬅️ ЭНЭ ЧУХАЛ */
+  margin-top:20px;
+  padding:18px;
+  border-radius:18px;
+  background:linear-gradient(180deg,#fff0f6,#ffffff);
+  box-shadow:0 10px 25px rgba(255,110,169,.25);
+  font-size:14px;
+  animation:fadeUp .6s ease;
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.flip-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:100px;          /* ⬅️ card хоорондын зай */
+  margin:28px 0;     /* ⬅️ дээр доор зай */
+}
+
+@media(min-width:700px){
+  .flip-grid{grid-template-columns:repeat(4,1fr)}
+}
+
+@media(max-width:500px){
+  .flip-grid{
+    grid-template-columns:1fr;
+    gap:22px;     /* ⬅️ mobile дээр илүү зай */
+  }
+}
+
+.flip-card{
+  perspective:1000px;
+  height:160px;
+  margin:auto;   /* ⬅️ card бүрийг төвд */
+}
+
+.flip-inner{
+  position:relative;
+  width:200px;
+  height:100%;
+  transition:transform .8s;
+  transform-style:preserve-3d;
+}
+
+.flip-card.active .flip-inner{
+  transform:rotateY(180deg);
+}
+
+.flip-face{
+  position:absolute;
+  inset:0;
+  backface-visibility:hidden;
+  border-radius:25px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:80px;
+  box-shadow:0 10px 30px rgba(0,0,0,.1);
+}
+
+.front{
+  background:linear-gradient(135deg,#ff6ea9,#ff9acb);
+  font-size:20px;
+  color:#fff;
+  font-weight:600;
+}
+
+.back{
+  background:#fff0f6;
+  color:#5a2b3c;
+  transform:rotateY(180deg);
+  font-size:13px;
+  line-height:1.8;     /* ⬅️ мөр хоорондын зай */
+  padding:40px;       /* ⬅️ дотор амьсгаа */
+  text-align: justify;       /* ⬅️ текстийг justify болгох */
+  box-sizing: border-box;    /* padding-ийг card-ийн width-д оруулах */
+  overflow-wrap: break-word; 
+}
+
+button{
+  padding:12px 20px;
+  border:none;
+  border-radius:12px;
+  background:#ff6ea9;
+  color:#fff;
+  font-size:16px;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+<div class="center">
+
+<!-- INTRO CARD -->
+<div class="card">
+  <div class="ribbon">Уучлаарай хайрт минь</div>
+  <div id="gift" class="gift">💌</div>
+  <div><b>Emoji дээр дарж захидлыг уншаарай</b></div>
+</div>
+
+<div class="flip-grid">
+  <div class="flip-card" onclick="this.classList.toggle('active')">
+    <div class="flip-inner">
+      <div class="flip-face front">💖 Love</div>
+      <div class="flip-face back">
+        Чамайг хайрлахад надад шалтгаан хэрэггүй.
+        Би зүгээр л чамайг байгаагаар чинь хайрлах болно.
+      </div>
+    </div>
+  </div>
+
+  <div class="flip-card" onclick="this.classList.toggle('active')">
+    <div class="flip-inner">
+      <div class="flip-face front">🌙 Promise</div>
+      <div class="flip-face back">
+        Чамайг гомдсон уурласан үед ч чиний дэргэд байсаар байх болно.
+      </div>
+    </div>
+  </div>
+
+  <div class="flip-card" onclick="this.classList.toggle('active')">
+    <div class="flip-inner">
+      <div class="flip-face front">🤍 Understanding</div>
+      <div class="flip-face back">
+        Чи минь өөрийгөө ойлгохгүй үе гарсан ч би чинь чамайгаа ойлгох болно.
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+<!-- LETTER SECTION -->
+<div id="letter" class="section">
+  <h2>Намайг жаахан сонсооч…</h2>
+  <p>
+
+    Хайрт минь, <br>
+
+Энэ захидлыг яаж эхлэхээ би одоо ч бүрэн мэдэхгүй байна.
+<br>
+Гэхдээ нэг л зүйлийг үнэн сэтгэлээсээ хэлмээр байна — би чамд хайртай.
+<br>
+Чи минь миний аз жаргал.
+Чиний инээмсэглэл
+миний амьдралын хамгийн тайван,
+хамгийн гэрэлтэй мөчүүд байсаар ирсэн.
+Гэхдээ би чамайг гомдоосон.
+<br>
+Өнгөрсөн хугацаанд чамайгаа 
+олон удаа гомдоосон.
+Чиний мэдэрсэн өвдөлт
+хэдхэн сайхан үгээр арилчих зүйл биш гэдгийг ойлгож байнаа.
+Тиймээс л би уучлал гуйх гэж биш,
+өөрийгөө зөвтгөх гэж ч биш,
+зүгээр л чин зүрхнийхээ үнэнийг
+хэлэх гэж энэ захидлыг бичиж байна.
+Чи минь миний амьдралыг
+аюулгүй мэдрэмж, дулаан тэврэлт шиг, гэрэл гэгээгээр дүүргэдэг нэгэн шүү.
+<br>
+Тиймээс би чамайгаа дахин гомдоохгүй байхыг хүсэж байна.
+Хэрвээ чи надад дахин нэг боломж олговол чамайгаа сонсож,
+алдаагаа давтахгүй байхыг хичээх болно.
+<br>
+Хайртай шүү чамдаа.
+
+  </p>
+
+  <button onclick="showGallery()">Дараагийн хэсэг 🫶</button>
+</div>
+
+<!-- GALLERY -->
+<div id="gallerySection" class="section">
+  <h2>Бидний дурсамж</h2>
+  <div class="gallery">
+    <div class="photo"><img src="images/1.jpeg"><div class="caption">Энэ мөч одоо ч тод 🔥</div></div>
+    <div class="photo"><img src="images/2.jpeg"><div class="caption">Чиний инээмсэглэл миний өдөр бүрийг гэрэлтүүлдэг😍</div></div>
+    <div class="photo"><img src="images/3.jpeg"><div class="caption">Аз жаргалтай ✨ </div></div>
+    <div class="photo"><img src="images/4.jpeg"><div class="caption">Хамтдаа байсан өдрүүд 💖</div></div>
+    <div class="photo"><img src="images/5.jpeg"><div class="caption">Ямар үзэсгэлэнтэй гээч 😎</div></div>
+    <div class="photo"><img src="images/6.jpeg"><div class="caption">Memories tho 🫶</div></div>
+    <div class="photo"><img src="images/7.jpeg"><div class="caption">Хамтдаа өнгөрүүлсэн өдөр бүр үнэтэй ✨</div></div>
+    <div class="photo"><img src="images/8.jpeg"><div class="caption">Unforgettable dayz 🌸</div></div>
+    <div class="photo"><img src="images/9.jpeg"><div class="caption">Чиний дэргэд өнгөрсөн мөч бүр амьдралын гэрэл 🌹</div></div>
+    <div class="photo"><img src="images/10.jpeg"><div class="caption">Миний зүрхэнд 💓</div></div>
+  </div>
+
+  <div class="buttons">
+    <button class="yes" onclick="answer(true)">Уучилж үзье</button>
+    <!-- <button class="no" onclick="answer(false)">Бэлэн биш байна</button> -->
+  </div>
+
+  <div id="response" class="response"></div>
+</div>
+
+</div>
+</div>
+
+<script>
+const gift = document.getElementById('gift');
+const letter = document.getElementById('letter');
+const gallery = document.getElementById('gallerySection');
+const response = document.getElementById('response');
+
+gift.onclick = () => {
+  gift.classList.add('shrink');
+  setTimeout(() => letter.classList.add('show'), 300);
+};
+
+function showGallery(){
+  gallery.classList.add('show');
+  gallery.scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+function answer(ok){
+  response.style.display = 'block';
+  response.innerHTML = ok
+    ? "🤍 KISS ya my LOVIE. хайртай шүү 🤍"
+    : "🌸 ."
+    ;
+
+  response.scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+</script>
+
+
+
+</body>
+</html>
