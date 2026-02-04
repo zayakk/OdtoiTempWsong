@@ -463,6 +463,7 @@ p {
   background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(4px);
   transition: background 0.3s ease;
+  pointer-events: none;
 }
 
 .video-item:hover {
@@ -827,6 +828,71 @@ audio {
 .hidden {
   display: none;
 }
+
+.video-section {
+  padding: 40px 16px;
+  position: relative;
+  z-index: 2;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.4rem;
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+/* 📱 mobile default */
+.video-item {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #000;
+}
+
+.video-item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ▶ overlay */
+.video-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.15),
+    rgba(0,0,0,0.45)
+  );
+  pointer-events: none; /* 🔥 маш чухал */
+}
+
+.play-icon {
+  font-size: 44px;
+  color: white;
+  opacity: 0.85;
+}
+
+/* 💻 desktop */
+@media (min-width: 768px) {
+  .video-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+
 </style>
 </head>
 
@@ -856,11 +922,11 @@ audio {
 <!-- Section 1: Hero -->
 <section class="section hero visible" id="section1">
   <div class="section-content">
-    <h1 class="hero-title">Хойд гэрлийн дурсамж</h1>
+    <h1 class="hero-title">생일 축하해, 자기야 🌸🌷🌹</h1>
     <p class="hero-subtitle">
-      Хамгийн гэрэлт мөчүүдийг үүрд хадгална
+      Чамтай учирсан минь миний амьдралын хамгийн том бэлэг.💖
     </p>
-    <div class="hero-icon" onclick="nextSection()">🌌</div>
+    <div class="hero-icon" onclick="nextSection()">🎂</div>
   </div>
   <div class="scroll-indicator">
     <span>Scroll</span>
@@ -871,9 +937,9 @@ audio {
 <section class="section" id="section2">
   <div class="section-content">
     <div class="hero-icon mb-lg" onclick="nextSection()">✨</div>
-    <h2>Та юу харахыг хүсч байна вэ?</h2>
+    <h2>Ирэх бүх төрсөн өдрийг чинь хамт угтмаар байна.🌙⭐🌠</h2>
     <p class="mb-lg">
-      Энэ бол зөвхөн танд зориулсан онцгой дурсамж
+      Энэ бол чамд зориулсан онцгой бэлэг🎁🎀
     </p>
     <button class="btn-primary" onclick="nextSection()">
       <span>Үргэлжлүүлэх</span>
@@ -885,24 +951,45 @@ audio {
 <!-- Section 3: Message Cards -->
 <section class="section" id="section3">
   <div class="section-content">
-    <h2 class="mb-lg">Таны төлөө бэлтгэсэн захиа</h2>
-    <p class="mb-lg">Картууд дээр дарж захиагаа уншаарай</p>
+    <h2 class="mb-lg">Картууд дээр дарж захиагаа уншаарай</h2>
+    <p class="mb-lg">💖🌙</p>
     
     <div class="message-grid">
       <div class="flip-card" onclick="flipCard(this)">
         <div class="flip-inner">
           <div class="flip-front">💫</div>
-          <div class="flip-back">Чи миний</div>
+          <div class="flip-back">Чи </div>
+        </div>
+      </div>
+
+      <div class="flip-card" onclick="flipCard(this)">
+        <div class="flip-inner">
+          <div class="flip-front">💞</div>
+          <div class="flip-back">минь</div>
+        </div>
+      </div>
+
+      <div class="flip-card" onclick="flipCard(this)">
+        <div class="flip-inner">
+          <div class="flip-front">🎉</div>
+          <div class="flip-back"> миний</div>
         </div>
       </div>
       
       <div class="flip-card" onclick="flipCard(this)">
         <div class="flip-inner">
           <div class="flip-front">✨</div>
-          <div class="flip-back">амьдралд</div>
+          <div class="flip-back">амьдралыг</div>
         </div>
       </div>
       
+      <div class="flip-card" onclick="flipCard(this)">
+        <div class="flip-inner">
+          <div class="flip-front">🎁</div>
+          <div class="flip-back">гэрэлтүүлэхээр</div>
+        </div>
+      </div>
+
       <div class="flip-card" onclick="flipCard(this)">
         <div class="flip-inner">
           <div class="flip-front">🌟</div>
@@ -920,7 +1007,7 @@ audio {
       <div class="flip-card" onclick="flipCard(this)">
         <div class="flip-inner">
           <div class="flip-front">💖</div>
-          <div class="flip-back">гэрэлт</div>
+          <div class="flip-back">тод</div>
         </div>
       </div>
       
@@ -958,29 +1045,25 @@ audio {
 </section>
 
 <!-- Section 5: Video Gallery -->
-<section class="section" id="section5">
-  <div class="container">
-    <h2 class="text-center mb-lg">Хамтдаа өнгөрүүлсэн мөчүүд</h2>
-    
-    <div class="video-grid" id="videoGrid">
-      <!-- Videos will be loaded dynamically -->
-    </div>
-    
-    <div class="text-center mt-lg">
+ <section class="video-section" id="section5">
+  <h2 class="section-title">Дурсамж бичлэгүүд 🎥</h2>
+  <div id="videoGrid" class="video-grid"></div>
+
+  <div class="text-center mt-lg">
       <button class="btn-primary" onclick="nextSection()">
         <span>Үргэлжлүүлэх</span>
         <span>→</span>
       </button>
     </div>
-  </div>
+
 </section>
 
 <!-- Section 6: Voice & Text -->
 <section class="section" id="section6">
   <div class="section-content">
-    <h2 class="mb-lg">Ирээдүйд зориулан</h2>
+    <h2 class="mb-lg">Ирээдүйдээ зориулан</h2>
     <p class="mb-lg">
-      5 жилийн дараа бид хамтдаа дахин сонсох, унших захиагаа үлдээцгээе
+      5 жилийн дараах бид хамтдаа дахин сонсох, унших захиагаа үлдээцгээе
     </p>
     
     <div class="voice-box">
@@ -1020,7 +1103,7 @@ audio {
     </div>
     
     <button class="btn-primary mt-lg" onclick="nextSection()">
-      <span>Эцсийн захиа</span>
+      <span>Дараагийн хэсэг</span>
       <span>→</span>
     </button>
   </div>
@@ -1033,27 +1116,27 @@ audio {
     
     <div class="letter-content">
       <p style="margin-bottom: 24px;">
-  Энэ хойд гэрлийн доор, чиний төрсөн энэ онцгой өдөр би зүрх сэтгэлийнхээ хамгийн 
+  Чиний төрсөн энэ онцгой өдөр би зүрх сэтгэлийнхээ хамгийн 
   нандин үгсийг чамд зориулан бичиж сууна. Өнөөдөр бол чиний инээмсэглэл илүү гэрэлтэж, 
-  чиний оршихуй энэ дэлхийг арай илүү дулаан болгосон өдөр.
+  чиний оршихуй энэ дэлхийг улас илүү дулаахан болгосон.
 </p>
 
 <p style="margin-bottom: 24px;">
   Чи миний амьдралд орж ирсэн тэр мөчөөс эхлээд бүх зүйл өөр өнгөтэй болсон. 
   Энгийн өдрүүд хүртэл утгатай, чимээгүй шөнүүд хүртэл тайван санагддаг болсон. 
-  Хойд гэрэл харанхуй тэнгэрийг гэрэлтүүлдэг шиг, чи миний замыг зөөлөн гэрэлтүүлж, 
+  Сар харанхуй тэнгэрийг гэрэлтүүлдэг шиг, чи миний замыг зөөлөн гэрэлтүүлж, 
   намайг өөртөө итгэлтэй алхахад минь хөтөлдөг.
 </p>
 
 <p style="margin-bottom: 24px;">
   Миний зүрх цохилж байгаа цагт, энэ амьдралаа зөвхөн чамдаа зориулна. 
   Чиний баярлах инээмсэглэлд миний бүх хүсэл мөрөөдөл багтдаг. 
-  Чиний гуниглахад би дэргэд чинь чимээгүйхэн түшиг болж, 
-  чиний баярлахад хамгийн чанга алга ташиж зогсох хүн нь би байхыг хүсдэг.
+  Чамайг гуниглахад би дэргэд чинь чимээгүйхэн түшиг болж, 
+  чамайг баярлахад хамгийн чанга алга ташиж зогсох хүн нь би байхыг хүснэ.
 </p>
 
 <p style="margin-bottom: 24px;">
-  Өнөөдөр, маргааш, нөгөөдөр… зөвхөн өнөөдрөөр хязгаарлагдахгүй, 
+  Өнөөдөр, маргааш, нөгөөдөр… 
   ирэх бүх өдрүүдэд чиний гараас атгаад хамт алхахыг хүсэж байна. 
   Цаг хугацаа өнгөрөх тусам бидний дурсамж улам зузаарч, 
   хайр маань улам бат бөх болсоор байх болтугай.
@@ -1068,18 +1151,18 @@ audio {
 <p style="margin-bottom: 24px;">
   Энэ төрсөн өдрөөр чинь би чамд амлалт өгмөөр байна. 
   Чамайг хүндэлж, ойлгож, хамгаалж, хайрлаж явна гэдгээ. 
-  Сайн үед чинь хамт инээж, хэцүү үед чинь ганцааранг чинь үлдээхгүй гэдгээ.
+  Жаргалтай үед чинь хамт инээж, хэцүү үед чинь ганцааранг чинь үлдээхгүй гэдгээ.
 </p>
 
 <p style="margin-bottom: 24px;">
-  Чи миний хойд гэрэл, миний од, миний тайвшрал, миний мөрөөдөл. 
+  Чи миний гэрэл гэгээ, миний од, миний тайвшрал, миний мөрөөдөл. 
   Энэ амьдралд чамтай учирсан минь миний хамгийн том бэлэг.
 </p>
 
 <p style="text-align: right; margin-top: 40px; font-style: italic;">
-  Төрсөн өдрийн мэнд, хайрт минь.  
-  Үүрд хамтдаа байх хүслээр 💫<br>
-  <small style="color: var(--text-dim);">2025.01.30</small>
+  Төрсөн өдрийн мэнд, хайрт минь. Миний зүрх цохилж байгаа цагт энэ амьдралаа зөвхөн чамдаа зориулна. 
+  Өнөөдөр, маргааш, нөгөөдөр, үүрд хамтдаа. 💫<br>
+  <small style="color: var(--text-dim);">2026.02.11</small>
 </p>
 
     </div>
@@ -1096,6 +1179,8 @@ audio {
 </div>
 
 <script>
+  
+
 // ===== CONFIGURATION =====
 const CONFIG = {
   // Энд тоог өөрчил - хэдэн зураг/бичлэг байгааг
@@ -1134,32 +1219,48 @@ function loadGalleryImages() {
 
 function loadGalleryVideos() {
   const container = document.getElementById('videoGrid');
-  
+  container.innerHTML = '';
+
   for (let i = 1; i <= CONFIG.totalVideos; i++) {
     const src = `${CONFIG.videoPath}${i}.${CONFIG.videoFormat}`;
-    
+
     const item = document.createElement('div');
     item.className = 'video-item';
-    item.onclick = () => openLightbox(src, 'video');
-    
+
     const video = document.createElement('video');
     video.src = src;
     video.muted = true;
-    video.preload = 'metadata'; // Performance optimization
-    
+    video.playsInline = true;   // 📱 MOBILE FIX
+    video.preload = 'metadata';
+    video.controls = false;
+
+    // 🎯 preview frame
+    video.addEventListener('loadeddata', () => {
+      try {
+        video.currentTime = 0.1;
+        video.pause();
+      } catch (e) {}
+    });
+
+    // 👉 click → lightbox
+    item.addEventListener('click', () => {
+      openLightbox(src, 'video');
+    });
+
     const overlay = document.createElement('div');
     overlay.className = 'video-overlay';
-    
+
     const playIcon = document.createElement('div');
     playIcon.className = 'play-icon';
     playIcon.textContent = '▶';
-    
+
     overlay.appendChild(playIcon);
     item.appendChild(video);
     item.appendChild(overlay);
     container.appendChild(item);
   }
 }
+
 
 // ===== STARS GENERATION =====
 function generateStars() {
@@ -1255,6 +1356,10 @@ function isIOS() {
 }
 
 async function startRecording() {
+  if (!navigator.mediaDevices || !window.MediaRecorder) {
+    alert('Таны browser дуу бичлэг дэмжихгүй байна 😢');
+    return;
+  }
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     
