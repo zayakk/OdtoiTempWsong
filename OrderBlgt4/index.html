@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<title>Мой пупсик🤍</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  font-family:'Poppins',sans-serif;
+  height:100vh;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 12% 5%, rgba(200,150,255,.65), transparent 32%),
+    radial-gradient(circle at 88% 20%, rgba(255,150,220,.55), transparent 38%),
+    radial-gradient(circle at 40% 85%, rgba(180,120,255,.5), transparent 45%),
+    radial-gradient(circle at 75% 70%, rgba(220,170,255,.45), transparent 40%),
+    radial-gradient(circle at 25% 50%, rgba(255,180,230,.35), transparent 50%),
+    linear-gradient(165deg, #f8f0ff 0%, #ffe5f8 25%, #f0d9ff 60%, #e8d0f5 100%);
+  color:#4a3555;
+  position:relative;
+}
+
+body::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse at 25% 35%, rgba(200,150,255,.2), transparent 55%),
+    radial-gradient(ellipse at 75% 65%, rgba(255,150,220,.18), transparent 60%),
+    radial-gradient(ellipse at 50% 80%, rgba(180,120,255,.15), transparent 65%);
+  animation:smokyMove 28s ease-in-out infinite alternate;
+  pointer-events:none;
+  z-index:0;
+}
+
+@keyframes smokyMove{
+  0%{transform:translate(0,0) scale(1) rotate(0deg)}
+  50%{transform:translate(3%,4%) scale(1.03) rotate(1deg)}
+  100%{transform:translate(-2%,-3%) scale(0.97) rotate(-1deg)}
+}
+
+body::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 60% 40%, rgba(255,200,240,.08), transparent 70%);
+  animation:smokyMove 35s ease-in-out infinite alternate-reverse;
+  pointer-events:none;
+  z-index:0;
+}
+
+.snow span{
+  position:absolute;
+  top:-20px;
+  width:11px;
+  height:11px;
+  background:radial-gradient(circle, rgba(255,245,255,.98) 0%, rgba(240,220,255,.65) 100%);
+  border-radius:50%;
+  filter:blur(3.5px);
+  opacity:.75;
+  animation:snowFall linear infinite;
+  box-shadow:
+    0 0 10px rgba(255,240,255,.5),
+    0 0 20px rgba(200,150,255,.3);
+}
+
+@keyframes snowFall{
+  0%{transform:translateY(0) translateX(0) rotate(0deg)}
+  100%{transform:translateY(110vh) translateX(60px) rotate(480deg)}
+}
+
+.app{
+  position:relative;
+  width:100%;
+  height:100%;
+  z-index:1;
+}
+
+.page{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:35px;
+  padding:35px;
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(35px) scale(.92);
+  transition:
+    opacity 1.4s cubic-bezier(.19,1,.22,1), 
+    transform 1.6s cubic-bezier(.19,1,.22,1);
+  filter:blur(12px);
+}
+
+.page.active{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateY(0) scale(1);
+  filter:blur(0);
+}
+
+.page.scrollable{
+  justify-content:flex-start;
+  overflow-y:auto;
+  padding:48px 30px;
+}
+
+.box{
+  background:
+    linear-gradient(150deg, 
+      rgba(255,250,255,.9) 0%,
+      rgba(250,240,255,.8) 40%,
+      rgba(245,235,255,.75) 100%
+    );
+  backdrop-filter:blur(40px) saturate(180%);
+  -webkit-backdrop-filter:blur(40px) saturate(180%);
+  border-radius:45px;
+  padding:58px 52px;
+  max-width:640px;
+  width:100%;
+  text-align:center;
+  box-shadow:
+    0 30px 80px rgba(180,120,255,.32),
+    0 10px 30px rgba(255,150,220,.25),
+    inset 0 3px 0 rgba(255,255,255,.7),
+    inset 0 -3px 12px rgba(200,150,255,.2);
+  border:1.5px solid rgba(255,250,255,.6);
+  position:relative;
+  animation:boxFloat 9s ease-in-out infinite;
+}
+
+@keyframes boxFloat{
+  0%, 100%{transform:translateY(0) rotate(0deg)}
+  50%{transform:translateY(-10px) rotate(0.5deg)}
+}
+
+.box::before{
+  content:'';
+  position:absolute;
+  inset:-2px;
+  border-radius:45px;
+  background:linear-gradient(140deg, 
+    rgba(255,255,255,.5) 0%, 
+    transparent 45%, 
+    rgba(200,150,255,.25) 100%);
+  z-index:-1;
+  opacity:.7;
+  animation:shimmer 6s ease-in-out infinite;
+}
+
+@keyframes shimmer{
+  0%, 100%{opacity:.7}
+  50%{opacity:.9}
+}
+
+.box::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  border-radius:45px;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255,200,240,.15), transparent 60%),
+    radial-gradient(circle at 70% 80%, rgba(200,150,255,.12), transparent 55%);
+  z-index:-1;
+  pointer-events:none;
+}
+
+h1, h2{
+  font-family:'Pacifico',cursive;
+  background:linear-gradient(140deg, 
+    #c878ff 0%, 
+    #ff70c4 35%, 
+    #ff9ee0 70%, 
+    #d8a0ff 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  filter:drop-shadow(0 10px 35px rgba(200,120,255,.5));
+  position:relative;
+}
+
+h1::after, h2::after{
+  content:attr(data-text);
+  position:absolute;
+  left:0;
+  top:3px;
+  z-index:-1;
+  background:linear-gradient(140deg, 
+    rgba(200,150,255,.45), 
+    rgba(255,150,220,.35));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  filter:blur(15px);
+}
+
+h1{font-size:44px; letter-spacing:0.6px; margin-bottom:10px;}
+h2{font-size:38px; letter-spacing:0.4px;}
+
+p{
+  font-size:18px;
+  line-height:2.1;
+  color:#5a4565;
+  text-shadow:0 1px 3px rgba(255,255,255,.9);
+}
+
+.gift{
+  font-size:85px;
+  cursor:pointer;
+  display:inline-block;
+  transition:transform .6s cubic-bezier(.68,-0.6,.27,1.65);
+  filter:drop-shadow(0 15px 30px rgba(200,120,255,.4));
+  animation:giftPulse 2.8s ease-in-out infinite;
+}
+
+@keyframes giftPulse{
+  0%, 100%{
+    transform:scale(1) rotate(0deg);
+    filter:drop-shadow(0 15px 30px rgba(200,120,255,.4));
+  }
+  50%{
+    transform:scale(1.1) rotate(8deg);
+    filter:drop-shadow(0 20px 45px rgba(255,150,220,.6));
+  }
+}
+
+.gift:hover{
+  transform:scale(1.2) rotate(20deg);
+  filter:drop-shadow(0 25px 50px rgba(200,120,255,.65));
+}
+
+button{
+  border:none;
+  border-radius:999px;
+  padding:18px 52px;
+  background:
+    linear-gradient(140deg, 
+      #e8b3ff 0%, 
+      #ffc9f0 40%, 
+      #ffe5f8 100%);
+  color:#5a2870;
+  font-size:17px;
+  font-weight:600;
+  cursor:pointer;
+  box-shadow:
+    0 22px 50px rgba(200,120,255,.55),
+    0 6px 18px rgba(255,150,220,.35),
+    inset 0 2px 0 rgba(255,255,255,.8),
+    inset 0 -2px 4px rgba(200,120,255,.25);
+  transition:all .45s cubic-bezier(.19,1,.22,1);
+  position:relative;
+  overflow:hidden;
+}
+
+button::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(140deg, 
+    transparent, 
+    rgba(255,255,255,.5), 
+    transparent);
+  transform:translateX(-100%) rotate(25deg);
+  transition:transform .7s;
+}
+
+button:hover::before{
+  transform:translateX(100%) rotate(25deg);
+}
+
+button:hover{
+  transform:translateY(-5px) scale(1.08);
+  box-shadow:
+    0 35px 75px rgba(200,120,255,.7),
+    0 10px 25px rgba(255,150,220,.45),
+    inset 0 2px 0 rgba(255,255,255,.9);
+}
+
+button:active{
+  transform:translateY(-2px) scale(1.03);
+}
+
+.card-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:20px;
+  margin-top:25px;
+}
+
+.flip-card{
+  width:80px;
+  height:80px;
+  perspective:1200px;
+}
+
+.flip-inner{
+  width:100%;
+  height:100%;
+  transition:transform .8s cubic-bezier(.68,-0.6,.27,1.65);
+  transform-style:preserve-3d;
+}
+
+.flip-card.flipped .flip-inner{
+  transform:rotateY(180deg);
+}
+
+.flip-front, .flip-back{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:20px;
+  backface-visibility:hidden;
+  box-shadow:0 15px 40px rgba(200,120,255,.45);
+}
+
+.flip-front{
+  background:
+    linear-gradient(140deg, 
+      rgba(255,250,255,.98), 
+      rgba(250,240,255,.95));
+  font-size:34px;
+  border:1px solid rgba(200,150,255,.35);
+}
+
+.flip-back{
+  background:
+    linear-gradient(140deg, #e8d0ff 0%, #fff0f9 100%);
+  transform:rotateY(180deg);
+  font-size:14px;
+  padding:9px;
+  color:#5a2870;
+  font-weight:600;
+  border:1px solid rgba(200,150,255,.45);
+  text-shadow:0 1px 3px rgba(255,255,255,.7);
+}
+
+.album{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+  margin-top:22px;
+}
+
+.album img,
+.album video{
+  width:100%;
+  height:200px;
+  border-radius:26px;
+  object-fit:cover;
+  cursor:pointer;
+  box-shadow:
+    0 25px 60px rgba(0,0,0,.3),
+    0 6px 18px rgba(200,120,255,.25),
+    inset 0 0 0 1.5px rgba(255,250,255,.25);
+  transition:all .55s cubic-bezier(.19,1,.22,1);
+  border:2.5px solid rgba(255,250,255,.5);
+}
+
+.album img:hover,
+.album video:hover{
+  transform:scale(1.08) translateY(-6px) rotate(1.5deg);
+  box-shadow:
+    0 35px 80px rgba(0,0,0,.4),
+    0 10px 30px rgba(200,120,255,.4);
+}
+
+.letter{
+  background:
+    repeating-linear-gradient(
+      #fffaff,
+      #fffaff 28px,
+      #f5edff 29px
+    );
+  border-radius:28px;
+  padding:42px;
+  max-height:60vh;
+  overflow-y:auto;
+  text-align:left;
+  line-height:2.2;
+  box-shadow:
+    inset 0 0 60px rgba(200,150,255,.35),
+    inset 0 3px 10px rgba(180,120,255,.25);
+  border:1px solid rgba(200,150,255,.3);
+}
+
+.letter::-webkit-scrollbar{width:9px}
+.letter::-webkit-scrollbar-track{
+  background:rgba(200,150,255,.12); 
+  border-radius:10px;
+}
+.letter::-webkit-scrollbar-thumb{
+  background:linear-gradient(180deg, #c878ff, #ffc9f0);
+  border-radius:10px;
+  box-shadow:inset 0 0 8px rgba(255,255,255,.6);
+}
+
+.lightbox{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:rgba(20,10,30,.8);
+  backdrop-filter:blur(10px);
+  z-index:999;
+}
+
+.lightbox img{
+  max-width:93%;
+  max-height:93%;
+  border-radius:26px;
+  box-shadow:0 35px 90px rgba(0,0,0,.7);
+}
+
+.page.cinematic{
+  background:#000;
+  color:white;
+  justify-content:center;
+  align-items:center;
+}
+
+.cinematic-bg{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse at center, 
+      #d088ff 0%, 
+      #c878ff 20%, 
+      #8040c0 45%, 
+      #000 80%);
+  animation:cinematicFade 9s ease forwards;
+}
+
+@keyframes cinematicFade{
+  0%{opacity:0; filter:blur(25px)}
+  100%{opacity:1; filter:blur(0)}
+}
+
+.cinematic-text{
+  position:relative;
+  text-align:center;
+  z-index:2;
+}
+
+.cinematic-text .line{
+  font-size:30px;
+  opacity:0;
+  margin-bottom:14px;
+  animation:fadeUp 2s forwards;
+  text-shadow:0 6px 25px rgba(200,120,255,.7);
+  font-weight:300;
+  letter-spacing:1.2px;
+}
+
+.cinematic-text .final-name{
+  margin-top:50px;
+  font-size:24px;
+  opacity:0;
+  animation:fadeUp 2.4s forwards;
+  font-weight:400;
+}
+
+.delay1{animation-delay:1.2s}
+.delay2{animation-delay:3s}
+.delay3{animation-delay:5s}
+.delay4{animation-delay:7s}
+
+@keyframes fadeUp{
+  from{opacity:0; transform:translateY(30px); filter:blur(12px)}
+  to{opacity:1; transform:translateY(0); filter:blur(0)}
+}
+
+.cinematic-btn{
+  margin-top:40px;
+  background:linear-gradient(140deg, #d088ff, #ffc9f0, #ffe5f8);
+  color:#5a2870;
+  font-size:16px;
+  box-shadow:
+    0 18px 45px rgba(200,120,255,.6),
+    inset 0 2px 0 rgba(255,255,255,.7);
+}
+
+.days-counter{
+  font-size:76px;
+  font-weight:700;
+  background:linear-gradient(140deg, #c878ff, #ff70c4, #ff9ee0, #d8a0ff);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  margin:28px 0 14px;
+  display:flex;
+  justify-content:center;
+  align-items:baseline;
+  gap:14px;
+  filter:drop-shadow(0 10px 30px rgba(200,120,255,.5));
+}
+
+.days-counter p{
+  font-size:26px;
+  color:#9988aa;
+}
+
+.days-text{
+  font-size:20px;
+  margin-bottom:14px;
+  font-weight:600;
+}
+
+.days-sub{
+  font-size:16px;
+  color:#aa99bb;
+  margin-bottom:28px;
+  font-style:italic;
+}
+
+.milestones{
+  margin-top:35px;
+  padding-top:28px;
+  border-top:2.5px solid rgba(200,150,255,.35);
+}
+
+.milestone{
+  background:
+    linear-gradient(140deg, #faf5ff 0%, #f5edff 100%);
+  border-left:5px solid #c878ff;
+  padding:16px 20px;
+  margin-bottom:16px;
+  border-radius:14px;
+  text-align:left;
+  box-shadow:
+    0 10px 25px rgba(200,150,255,.25),
+    inset 0 2px 0 rgba(255,255,255,.7);
+  transition:all .35s ease;
+}
+
+.milestone:hover{
+  transform:translateX(6px);
+  box-shadow:0 15px 35px rgba(200,150,255,.4);
+}
+
+.milestone-day{
+  font-size:14px;
+  color:#c878ff;
+  font-weight:700;
+  margin-bottom:6px;
+  letter-spacing:0.4px;
+}
+
+.milestone-text{
+  font-size:15px;
+  color:#5a4565;
+  line-height:1.7;
+}
+
+.milestone-emoji{
+  float:right;
+  font-size:22px;
+  filter:drop-shadow(0 3px 8px rgba(200,120,255,.4));
+}
+
+@media(max-width:600px){
+  h1{font-size:34px}
+  h2{font-size:30px}
+  .card-grid{grid-template-columns:repeat(3,1fr); gap:16px}
+  .flip-card{width:68px; height:68px}
+  .flip-back{font-size:12px}
+  .box{padding:44px 36px; border-radius:35px}
+  .milestone{padding:14px 16px}
+  .milestone-text{font-size:14px}
+  .days-counter{font-size:62px}
+}
+</style>
+</head>
+<body>
+<div class="snow" id="snow"></div>
+<div class="app">
+<!-- PAGE 1 -->
+<section class="page active">
+<div class="box">
+<h1>Мой пупсик<br>Хайрын баярын мэнд ❤️</h1>
+<p>Чамд минь зориулсан жижигхэн сюрприз 🤍</p>
+<div class="gift" onclick="nextPage()">🎁</div>
+</div>
+</section>
+<!-- PAGE 2 -->
+<section class="page">
+<div class="box">
+<h2>Өнөөдөр бол…</h2>
+<p>Энэ бол чамайг гэх,<br>хайрын жижигхээн хэсэг 🥰</p>
+<button onclick="nextPage()">Цааш нь харъя 💗</button>
+</div>
+</section>
+<!-- PAGE 3 -->
+<section class="page">
+<div class="box">
+<h2>Чамдаа хэлэх үгс</h2>
+<div class="card-grid" id="cardGrid"></div>
+<button onclick="nextPage()">Дурсамж руу ✨</button>
+</div>
+</section>
+<!-- PHOTO -->
+<section class="page scrollable">
+<div class="box">
+<h2>Бидний дурсамжууд 📸</h2>
+<div class="album">
+<img src="images/1.jpg" onclick="openImg(this)" alt="Дурсамж 1">
+<img src="images/2.jpg" onclick="openImg(this)" alt="Дурсамж 2">
+<img src="images/3.jpg" onclick="openImg(this)" alt="Дурсамж 3">
+<img src="images/4.jpg" onclick="openImg(this)" alt="Дурсамж 4">
+<img src="images/5.jpg" onclick="openImg(this)" alt="Дурсамж 5">
+<img src="images/6.jpg" onclick="openImg(this)" alt="Дурсамж 6">
+<img src="images/7.jpg" onclick="openImg(this)" alt="Дурсамж 7">
+<img src="images/8.jpg" onclick="openImg(this)" alt="Дурсамж 8">
+<img src="images/9.jpg" onclick="openImg(this)" alt="Дурсамж 9">
+<img src="images/10.jpg" onclick="openImg(this)" alt="Дурсамж 10">
+<!-- <img src="images/11.jpg" onclick="openImg(this)" alt="Дурсамж 11">
+<img src="images/12.jpg" onclick="openImg(this)" alt="Дурсамж 12">
+<img src="images/13.jpg" onclick="openImg(this)" alt="Дурсамж 13">
+<img src="images/14.jpg" onclick="openImg(this)" alt="Дурсамж 14">
+<img src="images/15.jpg" onclick="openImg(this)" alt="Дурсамж 15">
+<img src="images/16.jpg" onclick="openImg(this)" alt="Дурсамж 16">
+<img src="images/17.jpg" onclick="openImg(this)" alt="Дурсамж 17">
+<img src="images/18.jpg" onclick="openImg(this)" alt="Дурсамж 18"> -->
+</div>
+<button onclick="nextPage()">Цааш 🤍</button>
+</div>
+</section>
+<!-- VIDEO
+<section class="page scrollable">
+  <div class="box">
+    <h2>Бидний бичлэгүүд 🎥</h2>
+
+    <div class="album">
+      <video src="videos/1.mp4" controls muted playsinline></video>
+      <video src="videos/2.mp4" controls muted playsinline></video>
+      <video src="videos/3.mp4" controls muted playsinline></video>
+      <video src="videos/4.mp4" controls muted playsinline></video>
+      <video src="videos/5.mp4" controls muted playsinline></video>
+    </div>
+
+    <button onclick="nextPage()">Дараагийнх ✨</button>
+
+  </div>
+</section> -->
+
+    <!-- DAYS COUNTER WITH MILESTONES
+    <section class="page scrollable" id="daysPage">
+    <div class="box">
+    <h2>Бид хамтдаа</h2>
+    <div class="days-counter">
+    <span id="daysNumber">0</span>
+    <p>хоног</p>
+    </div>
+    <p class="days-text">өнгөрүүлжээ 🤍</p>
+    <p class="days-sub">Энэ бол зүгээр нэг тоо биш.</p>
+
+    <div class="milestones">
+    <div class="milestone">
+    <div class="milestone-emoji">💫</div>
+    <div class="milestone-day">1-р өдөр</div>
+    <div class="milestone-text">Бид анх уулзсан өдөр. Чи инээмсэглэхэд миний дотор ямар нэгэн зүйл өөрчлөгдсөн.</div>
+    </div>
+
+    <div class="milestone">
+    <div class="milestone-emoji">💗</div>
+    <div class="milestone-day">7-р өдөр</div>
+    <div class="milestone-text">Анхны долоо хоног. Чамтайгаа дахин уулзахыг тэсэн ядан хүлээж байсан.</div>
+    </div>
+
+    <div class="milestone">
+    <div class="milestone-emoji">🌹</div>
+    <div class="milestone-day">30-р өдөр</div>
+    <div class="milestone-text">Анхны сар. Чи миний өдөр бүрийн хамгийн гоё бодол болсон.</div>
+    </div>
+
+    <div class="milestone">
+    <div class="milestone-emoji">✨</div>
+    <div class="milestone-day">100-р өдөр</div>
+    <div class="milestone-text">Зуу дахь хоног. Би чамгүй амьдралаа төсөөлөхөө больсон.</div>
+    </div>
+
+    <div class="milestone">
+    <div class="milestone-emoji">🎊</div>
+    <div class="milestone-day">365-р өдөр</div>
+    <div class="milestone-text">Бүтэн жил хамт. Дөрвөн улирал бүрд чамтай хамт байсан нь аз жаргал.</div>
+    </div>
+
+    <div class="milestone">
+    <div class="milestone-emoji">🤍</div>
+    <div class="milestone-day">Өнөөдөр - 542-р өдөр</div>
+    <div class="milestone-text">Бид эндээс хойш ч үргэлж хамтдаа байх болно.</div>
+    </div>
+    </div>
+
+    <button onclick="nextPage()">Цааш ✨</button>
+    </div>
+    </section> -->  
+<!-- LETTER -->
+<section class="page">
+<div class="box">
+<h2>Чамд зориулсан захиа 💌</h2>
+<audio id="bgMusic" src="audio/music.mp3" loop></audio>
+<button onclick="startMusic()">🤍 Дууг эхлүүлэх</button>
+<div class="letter">
+      Сайн уу хайрт минь, Энийг уншаад сууж байгаа өдрийн мэнд.<br><br>
+      Хайртаа хэрвээ би чамтай учраагүй бол хайрлаж бас хайрлуулах ямар сайханыг хүн хүндээ ингэж уусч болдогыг мэдрэхгүй байх байсаан. Би өмнө нь хэзээ ч хол байгаа хэн нэгнийг ингэж их санаж үгүйлж хайрлана гэж боддог байгаагүй ээ. Чи бол миний амьдралд хайж яваагүй ч хаанаас ч хайгаад олохооргүй тийм л нандин гэрэл гэгээ утга учир минь юм шүү. Хайртайгаа хамт байхдаа би хэнээс ч юунаас ч айдаггүй хамгийн дулаахан тухтай тайвширалыг юу юунаас илүү мэдэрдэгдээ. Хэдий хол байгаа ч ганцхан намайг гэж надад хайртай гэдгийг чинь  өдөр бүр үг үйлдлээр нь мэдэрдэг болохоор би ганцхан чамтай байхдаа жаргалтай байдагаа. Холын харилцаа амаргүй ээ. Гэхдээ амархан байсан бол энэ харилцаа ийм үнэ цэнэтэй байхгүй. Бид хоорондоо гар хүрч чадахгүй ч зүрх сэтгэлээрээ өдөр бүр уулзаж чаддаг. Тийм болохоор хол байх хэсэгхэн хугацаагаа даваад гарна шүү хайрт минь. Чамаасаа хол байх тусмаа чамд ямар их хайртайгаа чи минь надад ямар их хэрэгтэй болохыг мэдэрдэг. Чамтайгаа танилцахаасаа өмнө би яаж амьдардаг байсан юм бол доо. Миний амьдралын хамгийн том шагнал минь чамдаа хязгааргүй их хайртай шүү. Чамайгаа маш их санаж байна даа зулзага минь. Хурдан хайртайгаа уулзах өдрийг хуруу даран хүлээж сууна даа. Хайртайшүү аз жаргал, гэрэл гэгээ минь
+</div>
+<button class="cinematic-btn" onclick="goCinematic()">
+      Энэ хүртэл ирсэн чамдаа 🤍
+</button>
+</div>
+</section>
+<!-- CINEMATIC END -->
+<section class="page cinematic" id="finalScene">
+<div class="cinematic-bg"></div>
+<div class="cinematic-text">
+<p class="line delay1">Хайртай шүү чамдаа!</p>
+<p class="line delay2">Өнөөдөр ч, маргааш ч</p>
+<p class="line delay3">үргэлж.</p>
+<p class="final-name delay4">— Хайраас нь 🤍</p>
+</div>
+</section>
+</div>
+<div class="lightbox" id="lightbox" onclick="this.style.display='none'">
+<img id="lightImg" alt="Том зураг">
+</div>
+<script>
+// Global variables
+const pages = document.querySelectorAll('.page');
+let current = 0;
+let daysStarted = false;
+const TARGET_DAYS = 542;
+// Page navigation
+function nextPage() {
+  pages[current].classList.remove('active');
+
+  current = Math.min(current + 1, pages.length - 1);
+  pages[current].classList.add('active');
+
+  if(pages[current].classList.contains('cinematic')){
+    document.body.style.overflow = 'hidden';
+  }
+
+  if(pages[current].id === 'daysPage') {
+    setTimeout(startDaysCounter, 300);
+  }
+}
+
+// Snow effect
+for(let i = 0; i < 70; i++) {
+const s = document.createElement('span');
+s.style.left = Math.random() * 100 + 'vw';
+s.style.animationDuration = 4 + Math.random() * 6 + 's';
+document.getElementById('snow').appendChild(s);
+}
+// Flip cards
+const words = ["Чи","миний","амьдралд","ирсэн","хамгийн","дулаахан","аз","хайр","юм","шүү 🤍"];
+const cardGrid = document.getElementById('cardGrid');
+words.forEach(word => {
+const card = document.createElement('div');
+card.className = 'flip-card';
+card.onclick = function() { this.classList.add('flipped'); };
+card.innerHTML = `
+    <div class="flip-inner">
+      <div class="flip-front">💗</div>
+      <div class="flip-back">${word}</div>
+    </div>
+  `;
+cardGrid.appendChild(card);
+});
+// Image lightbox
+function openImg(img) {
+document.getElementById('lightbox').style.display = 'flex';
+document.getElementById('lightImg').src = img.src;
+}
+// Music control
+function startMusic() {
+const m = document.getElementById('bgMusic');
+m.volume = 0.35;
+m.play().catch(() => {});
+}
+// Days counter animation
+function startDaysCounter() {
+if(daysStarted) return;
+daysStarted = true;
+const el = document.getElementById("daysNumber");
+if(!el) return;
+let value = 0;
+const interval = setInterval(() => {
+value++;
+el.textContent = value;
+if(value >= TARGET_DAYS) {
+clearInterval(interval);
+    }
+  }, 15);
+}
+// Cinematic ending
+function goCinematic() {
+nextPage();
+const bg = document.getElementById('bgMusic');
+if(bg && !bg.paused) {
+let v = bg.volume;
+const fade = setInterval(() => {
+if(v > 0.05) {
+v -= 0.05;
+bg.volume = v;
+      } else {
+bg.pause();
+clearInterval(fade);
+      }
+    }, 200);
+  }
+}
+let cinematicStarted = false;
+
+function goCinematic() {
+  if(cinematicStarted) return;
+  cinematicStarted = true;
+
+  nextPage();
+
+  const bg = document.getElementById('bgMusic');
+  if(bg && !bg.paused) {
+    let v = bg.volume;
+    const fade = setInterval(() => {
+      if(v > 0.05) {
+        v -= 0.05;
+        bg.volume = v;
+      } else {
+        bg.pause();
+        clearInterval(fade);
+      }
+    }, 200);
+  }
+}
+
+// Letter scroll auto-advance
+window.addEventListener('DOMContentLoaded', () => {
+const letterBox = document.querySelector('.letter');
+if(letterBox) {
+letterBox.addEventListener('scroll', () => {
+const nearBottom = letterBox.scrollTop + letterBox.clientHeight >= letterBox.scrollHeight - 10;
+if(nearBottom) {
+setTimeout(goCinematic, 1200);
+      }
+    });
+  }
+});
+</script>
+</body>
+</html>
