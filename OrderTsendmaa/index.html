@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will u be my valentine</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ===== RESET & BASE ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Aurora Colors */
+  --aurora-green: #00ff88;
+  --aurora-blue: #0088ff;
+  --aurora-purple: #8800ff;
+  --aurora-pink: #ff0088;
+  
+  /* Base Colors */
+  --bg-dark: #0a0e27;
+  --bg-darker: #050711;
+  --text-light: #e8edf5;
+  --text-dim: #8892a6;
+  --accent: #00ffcc;
+  
+  /* Spacing */
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 48px;
+  --spacing-xl: 80px;
+  --spacing-2xl: 120px;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-darker);
+  color: var(--text-light);
+  line-height: 1.6;
+  overflow-x: hidden;
+  font-size: 18px;
+}
+
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: clamp(48px, 8vw, 72px);
+  margin-bottom: var(--spacing-md);
+}
+
+h2 {
+  font-size: clamp(36px, 6vw, 52px);
+  margin-bottom: var(--spacing-sm);
+}
+
+p {
+  font-size: 18px;
+  line-height: 1.8;
+  color: var(--text-dim);
+  max-width: 65ch;
+}
+
+/* ===== AURORA BACKGROUND ===== */
+.aurora-bg {
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse at top, var(--bg-dark) 0%, var(--bg-darker) 50%);
+  z-index: -2;
+}
+
+.aurora-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.4;
+  filter: blur(60px);
+  pointer-events: none;
+}
+
+.aurora-wave {
+  position: absolute;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--aurora-green),
+    var(--aurora-blue),
+    var(--aurora-purple),
+    var(--aurora-pink),
+    transparent
+  );
+  opacity: 0.3;
+  animation: auroraMove 20s ease-in-out infinite;
+}
+
+.aurora-wave:nth-child(1) {
+  top: 10%;
+  animation-delay: 0s;
+}
+
+.aurora-wave:nth-child(2) {
+  top: 30%;
+  animation-delay: -7s;
+  opacity: 0.25;
+}
+
+.aurora-wave:nth-child(3) {
+  top: 50%;
+  animation-delay: -14s;
+  opacity: 0.2;
+}
+
+@keyframes auroraMove {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateX(-25%) translateY(-20px) rotate(2deg);
+  }
+  50% {
+    transform: translateX(0%) translateY(0) rotate(0deg);
+  }
+  75% {
+    transform: translateX(-25%) translateY(20px) rotate(-2deg);
+  }
+}
+
+/* ===== STARS ===== */
+.stars {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: starTwinkle 3s ease-in-out infinite;
+}
+
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* ===== CONTAINER ===== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+/* ===== SECTIONS ===== */
+.section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-xl) var(--spacing-md);
+  position: relative;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section-content {
+  max-width: 900px;
+  text-align: center;
+}
+
+/* ===== HERO SECTION ===== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: var(--spacing-2xl) var(--spacing-md);
+}
+
+.hero-title {
+  background: linear-gradient(
+    135deg,
+    var(--aurora-green) 0%,
+    var(--aurora-blue) 25%,
+    var(--aurora-purple) 50%,
+    var(--aurora-pink) 75%,
+    var(--aurora-green) 100%
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 8s ease infinite;
+  margin-bottom: var(--spacing-md);
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.hero-subtitle {
+  font-size: 22px;
+  color: var(--text-dim);
+  margin-bottom: var(--spacing-lg);
+  animation: fadeInUp 1s ease 0.3s both;
+}
+
+.hero-icon {
+  font-size: 120px;
+  cursor: pointer;
+  animation: float 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 40px rgba(0, 255, 204, 0.6));
+  transition: transform 0.4s ease;
+}
+
+.hero-icon:hover {
+  transform: scale(1.15) rotate(10deg);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== BUTTONS ===== */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 40px;
+  font-size: 18px;
+  font-weight: 500;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(135deg, var(--aurora-blue), var(--aurora-purple));
+  color: white;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 8px 30px rgba(0, 136, 255, 0.4);
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--aurora-purple), var(--aurora-pink));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(136, 0, 255, 0.6);
+}
+
+.btn-primary:hover::before {
+  opacity: 1;
+}
+
+.btn-primary span {
+  position: relative;
+  z-index: 1;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 40px;
+  font-size: 18px;
+  font-weight: 500;
+  border: 2px solid rgba(0, 255, 204, 0.5);
+  border-radius: 50px;
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.btn-secondary:hover {
+  background: rgba(0, 255, 204, 0.1);
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(0, 255, 204, 0.3);
+}
+
+/* ===== FLIP CARDS ===== */
+.message-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 20px;
+  margin: var(--spacing-lg) 0;
+  max-width: 800px;
+}
+
+.flip-card {
+  aspect-ratio: 1;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style: preserve-3d;
+}
+
+.flip-card.flipped .flip-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-front,
+.flip-back {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  backface-visibility: hidden;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.flip-front {
+  background: linear-gradient(135deg, rgba(0, 136, 255, 0.2), rgba(136, 0, 255, 0.2));
+  border: 1px solid rgba(0, 255, 204, 0.3);
+  backdrop-filter: blur(10px);
+  font-size: 48px;
+}
+
+.flip-back {
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 136, 255, 0.2));
+  border: 1px solid rgba(0, 255, 204, 0.5);
+  backdrop-filter: blur(10px);
+  transform: rotateY(180deg);
+  color: var(--text-light);
+  padding: 16px;
+  text-align: center;
+}
+
+/* ===== GALLERY ===== */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin: var(--spacing-lg) 0;
+}
+
+.gallery-item {
+  position: relative;
+  aspect-ratio: 4/3;
+  border-radius: 24px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.gallery-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.3), rgba(136, 0, 255, 0.3));
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 1;
+}
+
+.gallery-item:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 60px rgba(0, 255, 204, 0.4);
+}
+
+.gallery-item:hover::before {
+  opacity: 1;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.1);
+}
+
+.play-icon {
+  font-size: 72px;
+  color: white;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+}
+
+/* ===== VOICE RECORDER ===== */
+.voice-box {
+  background: rgba(10, 14, 39, 0.6);
+  border: 1px solid rgba(0, 255, 204, 0.3);
+  border-radius: 30px;
+  padding: var(--spacing-lg);
+  backdrop-filter: blur(20px);
+  max-width: 700px;
+  margin: var(--spacing-lg) auto;
+}
+
+.voice-controls {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: var(--spacing-md);
+}
+
+.recording-indicator {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 24px;
+  background: rgba(255, 0, 136, 0.2);
+  border: 1px solid rgba(255, 0, 136, 0.5);
+  border-radius: 50px;
+  font-size: 16px;
+  margin-bottom: var(--spacing-sm);
+}
+
+.recording-indicator.active {
+  display: flex;
+}
+
+.rec-dot {
+  width: 12px;
+  height: 12px;
+  background: #ff0088;
+  border-radius: 50%;
+  animation: pulse 1s ease infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.2); }
+}
+
+audio {
+  width: 100%;
+  margin: var(--spacing-sm) 0;
+  border-radius: 50px;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.download-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: rgba(0, 255, 136, 0.2);
+  border: 1px solid rgba(0, 255, 136, 0.5);
+  border-radius: 50px;
+  color: var(--aurora-green);
+  text-decoration: none;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.download-link:hover {
+  background: rgba(0, 255, 136, 0.3);
+  transform: translateY(-2px);
+}
+
+.text-input {
+  width: 100%;
+  min-height: 150px;
+  padding: var(--spacing-md);
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 255, 204, 0.3);
+  border-radius: 20px;
+  color: var(--text-light);
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  resize: vertical;
+  transition: border-color 0.3s ease;
+}
+
+.text-input::placeholder {
+  color: var(--text-dim);
+}
+
+.text-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0, 255, 204, 0.1);
+}
+
+/* ===== LETTER ===== */
+.letter-container {
+  max-width: 800px;
+  margin: var(--spacing-lg) auto;
+  padding: var(--spacing-xl);
+  background: rgba(10, 14, 39, 0.8);
+  border: 1px solid rgba(0, 255, 204, 0.2);
+  border-radius: 30px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  text-align: justify;
+}
+
+.letter-content {
+  font-size: 19px;
+  line-height: 2;
+  color: var(--text-light);
+  text-align: left;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: var(--spacing-sm);
+  text-align: justify;
+}
+
+.letter-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.letter-content::-webkit-scrollbar-track {
+  background: rgba(0, 255, 204, 0.1);
+  border-radius: 10px;
+}
+
+.letter-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--aurora-blue), var(--aurora-purple));
+  border-radius: 10px;
+}
+
+/* ===== LIGHTBOX ===== */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  padding: var(--spacing-md);
+}
+
+.lightbox.active {
+  display: flex;
+}
+
+.lightbox-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+
+.lightbox-close {
+  position: absolute;
+  top: -50px;
+  right: 0;
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+}
+
+.lightbox-close:hover {
+  background: rgba(255, 0, 136, 0.8);
+  border-color: var(--aurora-pink);
+  transform: rotate(90deg);
+}
+
+/* ===== MUSIC CONTROL ===== */
+.music-control {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--aurora-blue), var(--aurora-purple));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 8px 30px rgba(0, 136, 255, 0.6);
+  transition: all 0.3s ease;
+  z-index: 100;
+}
+
+.music-control:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 40px rgba(136, 0, 255, 0.8);
+}
+
+.music-control.playing {
+  animation: musicPulse 1.5s ease infinite;
+}
+
+@keyframes musicPulse {
+  0%, 100% { box-shadow: 0 8px 30px rgba(0, 136, 255, 0.6); }
+  50% { box-shadow: 0 8px 50px rgba(136, 0, 255, 0.9); }
+}
+
+/* ===== SCROLL INDICATOR ===== */
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-dim);
+  font-size: 14px;
+  animation: scrollBounce 2s ease infinite;
+}
+
+@keyframes scrollBounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(10px); }
+}
+
+.scroll-indicator::after {
+  content: '↓';
+  font-size: 24px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  :root {
+    --spacing-lg: 32px;
+    --spacing-xl: 48px;
+    --spacing-2xl: 80px;
+  }
+
+  body {
+    font-size: 16px;
+  }
+
+  p {
+    font-size: 16px;
+  }
+
+  .hero-subtitle {
+    font-size: 18px;
+  }
+
+  .hero-icon {
+    font-size: 80px;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    padding: 14px 28px;
+    font-size: 16px;
+  }
+
+  .message-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .flip-front,
+  .flip-back {
+    font-size: 14px;
+  }
+
+  .flip-front {
+    font-size: 32px;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .voice-box {
+    padding: var(--spacing-md);
+  }
+
+  .letter-container {
+    padding: var(--spacing-md);
+  }
+
+  .letter-content {
+    font-size: 16px;
+    text-align: justify;
+  }
+
+  .music-control {
+    width: 50px;
+    height: 50px;
+    bottom: 20px;
+    right: 20px;
+  }
+
+  .lightbox-close {
+    top: -40px;
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* ===== UTILITIES ===== */
+.text-center {
+  text-align: center;
+}
+
+.mb-lg {
+  margin-bottom: var(--spacing-lg);
+  text-align: center;
+  content: center;
+}
+
+.mt-lg {
+  margin-top: var(--spacing-lg);
+}
+
+.hidden {
+  display: none;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.4rem;
+}
+
+.play-icon {
+  font-size: 44px;
+  color: white;
+  opacity: 0.85;
+}
+
+/* 💻 desktop */
+@media (min-width: 768px) {
+  .video-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+
+</style>
+</head>
+
+<body>
+
+<!-- Aurora Background -->
+<div class="aurora-bg">
+  <div class="aurora-canvas">
+    <div class="aurora-wave"></div>
+    <div class="aurora-wave"></div>
+    <div class="aurora-wave"></div>
+  </div>
+</div>
+
+<!-- Stars -->
+<div class="stars" id="stars"></div>
+
+<!-- Music Control -->
+<div class="music-control hidden" id="musicControl">
+  <span id="musicIcon">🎵</span>
+</div>
+
+<audio id="bgMusic" loop>
+  <source src="audio/voice.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Section 1: Hero -->
+<section class="section hero visible" id="section1">
+  <div class="section-content">
+    <h1 class="hero-title">🌷 Царайлаг залуу 🩷 Нэгүүнд 🌹</h1>
+    <p class="hero-subtitle">
+      Чи бол миний миний өдөр бүрийн догдлол…  
+  харин би чиний ирээдүйн аз жаргал байхыг хүсэж байна.💗
+
+    </p>
+    <div class="hero-icon" onclick="nextSection()">🩵</div>
+  </div>
+  <div class="scroll-indicator">
+    <span>Зүрх дээр дараарай</span>
+  </div>
+</section>
+
+<!-- Section 2: Intro -->
+<section class="section" id="section2">
+  <div class="section-content">
+    <div class="hero-icon mb-lg" onclick="nextSection()">✨</div>
+    <h2>Will You Be My Valentine 💖🌸</h2>
+    <p class="mb-lg">
+      Энэ бол зүгээр нэг бэлэг биш…  
+  Чиний зүрхэнд зориулагдсан миний чин сэтгэл 💌
+    </p>
+    <button class="btn-primary" onclick="nextSection()">
+      <span>Үргэлжлүүлэх</span>
+      <span>→</span>
+    </button>
+  </div>
+</section>
+
+<!-- Section 3: Message Cards -->
+<section class="section" id="section3">
+  <div class="section-content">
+    <h2 class="mb-lg">Картууд дээр дарж захиагаа уншаарай</h2>
+    <p class="mb-lg">💖  🌙</p>
+    
+    <div class="message-grid">
+      <div class="flip-card" onclick="flipCard(this)">
+        <div class="flip-inner">
+          <div class="flip-front">💫</div>
+          <div class="flip-back">Чи </div>
+        </div>
+      </div>
+
+      <div class="flip-card" onclick="flipCard(this)">
+        <div class="flip-inner">
+          <div class="flip-front">💞</div>
+          <div class="flip-back">бол</div>
+        </div>
+      </div>
+
+      <div class="flip-card" onclick="flipCard(this)">
+        <div class="flip-inner">
+          <div class="flip-front">🎉</div>
+          <div class="flip-back"> миний</div>
+        </div>
+      </div>
+      
+      <div class="flip-card" onclick="flipCard(this)">
+        <div class="flip-inner">
+          <div class="flip-front">✨</div>
+          <div class="flip-back">амьдралыг</div>
+        </div>
+      </div>
+      
+      <div class="flip-card" onclick="flipCard(this)">
+        <div class="flip-inner">
+          <div class="flip-front">🎁</div>
+          <div class="flip-back">чимээгүйхэн</div>
+        </div>
+      </div>
+
+      <div class="flip-card" onclick="flipCard(this)">
+        <div class="flip-inner">
+          <div class="flip-front">🌟</div>
+          <div class="flip-back">гэрэлтүүлдэг</div>
+        </div>
+      </div>
+      
+      <div class="flip-card" onclick="flipCard(this)">
+        <div class="flip-inner">
+          <div class="flip-front">⭐</div>
+          <div class="flip-back">хамгийн</div>
+        </div>
+      </div>
+      
+      <div class="flip-card" onclick="flipCard(this)">
+        <div class="flip-inner">
+          <div class="flip-front">💖</div>
+          <div class="flip-back">тод</div>
+        </div>
+      </div>
+      
+      <div class="flip-card" onclick="flipCard(this)">
+        <div class="flip-inner">
+          <div class="flip-front">🌠</div>
+          <div class="flip-back">ОД✨</div>
+        </div>
+      </div>
+    </div>
+    
+    <button class="btn-primary mt-lg" onclick="nextSection()">
+      <span>Дараах хэсэг</span>
+      <span>→</span>
+    </button>
+  </div>
+</section>
+
+
+<!-- Section 7: Final Letter -->
+<section class="section" id="section4">
+  <div class="letter-container">
+    <h2 class="text-center mb-lg">Сайна уу💖 Энэ захидалыг унших өдрийн мэнд✨</h2>
+    
+    <div class="letter-content">
+      <p style="margin-bottom: 24px;">
+        Зарим хүмүүс амьдралд гэнэт л орж ирдэг.  
+        Ямар нэгэн дуу чимээгүй атлаа  
+        бүх зүйлийг өөрчилчихдөг.  
+        Чи яг тийм хүн.
+      </p>
+
+      <p style="margin-bottom: 24px;">
+        Чамтай ярилцах бүрд  
+        энгийн мөчүүд хүртэл онцгой болдог.  
+        Чиний инээмсэглэл намайг тайвшруулж,  
+        дуугүйхэн хажууд чинь байх нь  
+        миний хамгийн дуртай мэдрэмж болсон.
+      </p>
+
+      <p style="margin-bottom: 24px;">
+        
+        Чамайг баярлахад хамт инээж,  
+        гуниглахад чинь дэргэд чинь байж чаддаг  
+        тийм хүн байхыг л хүсэж байна.
+      </p>
+
+      <p style="margin-bottom: 24px; font-weight: 500;">
+        Тиймээс би чамаас нэг л асуулт асуумаар байна.
+        <br><br>
+        Чи миний өнөөдрийн аз жаргал, догдлох шалтгаан байдаг☺️
+        миний маргааш, нөгөөдөр,  
+        ирэх өдрүүдийн минь аз жаргал байж чадах уу?
+        <br><br>
+        Би чиний найз охин болж болох уу? 💗
+      </p>
+
+      <p style="margin-bottom: 24px; color: var(--text-dim);">
+        Одоо заавал хариу өгөх албагүй ээ.  
+        Харин нэг дэх өдөр хичээл дээр ирэхдээ  
+        над руу зүгээр л инээмсэглээд  
+        “тийм” эсвэл “үгүй” гэж хэлэхэд л болно.  
+        Чиний ямар ч шийдвэрийг  
+        би хүндэтгэнэ. 🌷
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <div class="lightbox-content" onclick="event.stopPropagation()">
+    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+    <img id="lightboxImage" class="hidden" alt="Preview">
+  </div>
+</div>
+
+<script>
+  
+// ===== STARS GENERATION =====
+function generateStars() {
+  const container = document.getElementById('stars');
+  for (let i = 0; i < 100; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.style.left = Math.random() * 100 + '%';
+    star.style.top = Math.random() * 100 + '%';
+    star.style.animationDelay = Math.random() * 3 + 's';
+    container.appendChild(star);
+  }
+}
+
+// ===== SECTION NAVIGATION =====
+let currentSection = 1;
+const totalSections = 4;
+
+function nextSection() {
+  if (currentSection < totalSections) {
+    currentSection++;
+    const nextEl = document.getElementById(`section${currentSection}`);
+    nextEl.scrollIntoView({ behavior: 'smooth' });
+    
+    // Show music control on last section
+    if (currentSection === totalSections) {
+      document.getElementById('musicControl').classList.remove('hidden');
+      playMusic();
+    }
+  }
+}
+
+// ===== INTERSECTION OBSERVER =====
+const observerOptions = {
+  threshold: 0.3,
+  rootMargin: '0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.section').forEach(section => {
+  observer.observe(section);
+});
+
+// ===== FLIP CARDS =====
+function flipCard(card) {
+  card.classList.add('flipped');
+}
+
+// ===== LIGHTBOX =====
+function openLightbox(src, type) {
+  const lightbox = document.getElementById('lightbox');
+  
+  
+  if (type === 'image') {
+    image.src = src;
+    image.classList.remove('hidden');
+    video.classList.add('hidden');
+  } else {
+    video.src = src;
+    video.classList.remove('hidden');
+    image.classList.add('hidden');
+  }
+  
+  lightbox.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  const lightbox = document.getElementById('lightbox');
+  
+  
+  lightbox.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function isIOS() {
+  return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
+
+// ===== BACKGROUND MUSIC =====
+const bgMusic = document.getElementById('bgMusic');
+const musicControl = document.getElementById('musicControl');
+const musicIcon = document.getElementById('musicIcon');
+let isPlaying = false;
+
+function playMusic() {
+  if (!isPlaying) {
+    bgMusic.volume = 0.3;
+    bgMusic.play().then(() => {
+      isPlaying = true;
+      musicControl.classList.add('playing');
+      musicIcon.textContent = '🎵';
+    }).catch(err => {
+      console.log('Audio play blocked:', err);
+    });
+  }
+}
+
+musicControl.addEventListener('click', () => {
+  if (isPlaying) {
+    bgMusic.pause();
+    isPlaying = false;
+    musicControl.classList.remove('playing');
+    musicIcon.textContent = '🔇';
+  } else {
+    playMusic();
+  }
+});
+
+// ===== INITIALIZATION =====
+document.addEventListener('DOMContentLoaded', () => {
+  generateStars();
+  // Auto-play attempt on first user interaction
+  document.body.addEventListener('click', () => {
+    if (currentSection === totalSections && !isPlaying) {
+      playMusic();
+    }
+  }, { once: true });
+});
+
+// ===== KEYBOARD NAVIGATION =====
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowDown' || e.key === ' ') {
+    e.preventDefault();
+    nextSection();
+  }
+});
+</script>
+
+</body>
+</html>
