@@ -222,6 +222,47 @@ p{
     opacity:0;
   }
 }
+.valentine-banner{
+  margin-bottom:20px;
+  padding:15px;
+  border-radius:20px;
+  background:linear-gradient(135deg,#ff4d8d,#ff85b3);
+  color:#fff;
+  font-weight:600;
+  box-shadow:0 10px 30px rgba(255,77,141,.4);
+  animation:pulse 2s infinite;
+}
+
+#countdown{
+  font-size:14px;
+  margin-top:5px;
+}
+
+@keyframes pulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.03)}
+}
+
+.cupid{
+  position:fixed;
+  top:20%;
+  left:-100px;
+  font-size:40px;
+  animation:fly 15s linear infinite;
+  z-index:5;
+}
+
+@keyframes fly{
+  0%{left:-100px;transform:translateY(0)}
+  50%{transform:translateY(-40px)}
+  100%{left:110%;transform:translateY(0)}
+}
+@keyframes fallChoco{
+  to{
+    transform:translateY(110vh);
+    opacity:0;
+  }
+}
 </style>
 </head>
 
@@ -264,24 +305,43 @@ p{
       </div>
     </div>
 
+  
+
     <button id="yesBtn" class="btn" onclick="answer()">Уучилж үзье 🤍</button>
 
         <div id="response" class="response">
-        🤍 Хайртай шүү. Бид чадна. 🤍
+          🤍 Хайртай шүү. Бид чадна. 🤍
+            <div id="valPopup" class="popup">
+              💗 Will you be my Valentine? 💗<br><br>
+              <button class="btn small" onclick="valYes()">Yes 💖</button>
+            </div>
 
-        <div class="extra" id="extra" style="display:none;">
-            <p style="margin-top:15px;">💍 Forever хамт байх уу? 💍</p>
-            <button class="btn small" onclick="foreverYes()">Тийм 💖</button>
-        </div>
+          <div class="extra" id="extra" style="display:none;">
+              <p style="margin-top:15px;">💍 Forever хамт байх уу? 💍</p>
+              <button class="btn small" onclick="foreverYes()">Тийм 💖</button>
+          </div>
         </div>
 
         <div id="popup" class="popup">💞 Чи миний хамгийн нандин хүн💞</div>
 
   </div>
 
+
+    <div class="valentine-banner">
+      💘 Happy Valentine’s Day 💘 <br>
+      2026 оны 2-р сарын 14 💝
+          <div id="countdown"></div>
+        </div>
+
+    <div class="cupid">🏹💘</div>
 </div>
 
 <script>
+function valYes(){
+  const popup = document.getElementById("valPopup");
+  popup.classList.add("show");
+  setTimeout(()=>popup.classList.remove("show"),4000);
+}
 
 function answer(){
   const btn = document.getElementById("yesBtn");
@@ -348,12 +408,37 @@ function createHeart(){
   heart.style.animationDuration = (4 + Math.random()*3) + "s";
   heart.style.fontSize = (15 + Math.random()*25) + "px";
   heartsContainer.appendChild(heart);
-
   setTimeout(()=>heart.remove(),7000);
 }
-
 setInterval(createHeart,600);
 
+function updateCountdown(){
+  const now = new Date();
+  const year = now.getMonth() > 1 ? now.getFullYear()+1 : now.getFullYear();
+  const valentine = new Date(year,1,14);
+  const diff = valentine - now;
+
+  const days = Math.floor(diff/(1000*60*60*24));
+  document.getElementById("countdown").innerText =
+    days > 0 ? days + " days until Valentine 💖" : "It’s Valentine’s Day 💞";
+}
+
+updateCountdown();
+setInterval(updateCountdown,86400000);
+
+function chocolateRain(){
+  const choco = document.createElement("div");
+  choco.innerHTML = "🍫";
+  choco.style.position="fixed";
+  choco.style.top="-20px";
+  choco.style.left=Math.random()*100+"vw";
+  choco.style.fontSize="24px";
+  choco.style.animation="fallChoco 5s linear forwards";
+  document.body.appendChild(choco);
+  setTimeout(()=>choco.remove(),5000);
+}
+
+setInterval(chocolateRain,2000);
 </script>
 
 </body>
