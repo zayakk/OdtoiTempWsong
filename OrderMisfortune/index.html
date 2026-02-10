@@ -263,10 +263,78 @@ p{
     opacity:0;
   }
 }
+#intro{
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  animation:introFade 3s forwards;
+}
+
+.intro-text{
+  font-size:60px;
+  color:#fff;
+  letter-spacing:5px;
+  animation:glow 2s infinite alternate;
+}
+
+@keyframes glow{
+  from{text-shadow:0 0 10px #ff4d8d}
+  to{text-shadow:0 0 40px #ff4d8d}
+}
+
+@keyframes introFade{
+  0%{opacity:1}
+  80%{opacity:1}
+  100%{opacity:0;visibility:hidden}
+}
+.kiss{
+  position:fixed;
+  pointer-events:none;
+  font-size:20px;
+  animation:fadeKiss 1s forwards;
+  z-index:999;
+}
+
+@keyframes fadeKiss{
+  to{
+    transform:translateY(-20px);
+    opacity:0;
+  }
+}
+.proposal{
+  margin-top:30px;
+  text-align:center;
+}
+
+.ring-box{
+  font-size:60px;
+  cursor:pointer;
+  transition:.5s;
+}
+
+.ring-box.open{
+  transform:scale(1.3) rotate(20deg);
+}
+
+.proposal-text{
+  margin-top:15px;
+  font-size:20px;
+  color:#af1515;
+  display:none;
+}
+
 </style>
 </head>
 
 <body>
+<div id="intro">
+  <div class="intro-text">FOR MY LOVE ❤️</div>
+</div>
+
 <div class="hearts" id="hearts"></div>
 <div class="container">
 
@@ -310,12 +378,11 @@ p{
     <button id="yesBtn" class="btn" onclick="answer()">Уучилж үзье 🤍</button>
 
         <div id="response" class="response">
-          🤍 Хайртай шүү. Бид чадна. 🤍
+          🤍 Хайртай шүү 🤍
             <div id="valPopup" class="popup">
               💗 Will you be my Valentine? 💗<br><br>
               <button class="btn small" onclick="valYes()">Yes 💖</button>
             </div>
-
           <div class="extra" id="extra" style="display:none;">
               <p style="margin-top:15px;">💍 Forever хамт байх уу? 💍</p>
               <button class="btn small" onclick="foreverYes()">Тийм 💖</button>
@@ -324,7 +391,9 @@ p{
 
         <div id="popup" class="popup">💞 Чи миний хамгийн нандин хүн💞</div>
 
+
   </div>
+
 
 
     <div class="valentine-banner">
@@ -337,6 +406,29 @@ p{
 </div>
 
 <script>
+
+function loveExplosion(){
+  for(let i=0;i<50;i++){
+    const heart=document.createElement("div");
+    heart.innerHTML="💖";
+    heart.style.position="fixed";
+    heart.style.left="50%";
+    heart.style.top="50%";
+    heart.style.fontSize="30px";
+    heart.style.transform=`translate(-50%,-50%) rotate(${Math.random()*360}deg)`;
+    heart.style.transition="2s";
+    document.body.appendChild(heart);
+
+    setTimeout(()=>{
+      heart.style.left=Math.random()*100+"vw";
+      heart.style.top=Math.random()*100+"vh";
+      heart.style.opacity="0";
+    },10);
+
+    setTimeout(()=>heart.remove(),2000);
+  }
+}
+
 function valYes(){
   const popup = document.getElementById("valPopup");
   popup.classList.add("show");
@@ -346,20 +438,23 @@ function valYes(){
 function answer(){
   const btn = document.getElementById("yesBtn");
   const response = document.getElementById("response");
-  const extra = document.getElementById("extra");
 
-  btn.style.opacity = "0";
-  btn.style.transform = "scale(.8)";
-  btn.style.transition = ".4s";
+  // button disappear animation
+  if(btn){
+    btn.style.transition=".4s";
+    btn.style.opacity="0";
+    btn.style.transform="scale(.8)";
+    setTimeout(()=>btn.remove(),400);
+  }
 
-  setTimeout(()=> btn.style.display="none",400);
-
+  // show response
   response.style.display="block";
 
-  setTimeout(()=> extra.style.display="block",800);
-
-  startPetals();
+  // romantic effects
+  loveExplosion();   // 💖 explosion
+  startPetals();     // 🌸 petals
 }
+
 
 function startPetals(){
   setInterval(()=>{
@@ -382,6 +477,15 @@ function foreverYes(){
   },3000);
 }
 
+document.addEventListener("mousemove", e=>{
+  const kiss=document.createElement("div");
+  kiss.classList.add("kiss");
+  kiss.innerHTML="💋";
+  kiss.style.left=e.pageX+"px";
+  kiss.style.top=e.pageY+"px";
+  document.body.appendChild(kiss);
+  setTimeout(()=>kiss.remove(),1000);
+});
 
 const heartsContainer = document.getElementById("hearts");
 
