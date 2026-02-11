@@ -1,0 +1,683 @@
+<!-- s.kadoosh user temp 100 day -->
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8" />
+<title>Happy aniversary baby</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════════════════════════════════════
+   BASIC SETUP & RESET
+   ═══════════════════════════════════════════════════════════════════════════ */
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  height: 100vh;
+  overflow: hidden; /* Scroll хийгдэхгүй, зөвхөн page дотор scroll хийнэ */
+  background: radial-gradient(circle at top, #fff, #fff0f5, #ffe6f0);
+  color: #444;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ANIMATED BACKGROUND (CONFETTI & HEARTS)
+   ═══════════════════════════════════════════════════════════════════════════ */
+.confetti span {
+  position: absolute;
+  top: -20px;
+  width: 8px; height: 8px;
+  background: #ff6b9d;
+  border-radius: 2px;
+  opacity: 0.7;
+  animation: fall linear infinite;
+  z-index: 0;
+}
+@keyframes fall {
+  to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+.hearts span {
+  position: absolute;
+  bottom: -30px;
+  font-size: 24px;
+  opacity: 0.6;
+  animation: floatUp linear infinite;
+  filter: drop-shadow(0 4px 6px rgba(255,100,150,0.3));
+  z-index: 0;
+}
+@keyframes floatUp {
+  to { transform: translateY(-110vh) rotate(20deg); opacity: 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MAIN APP CONTAINER
+   ═══════════════════════════════════════════════════════════════════════════ */
+.app {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PAGES (SCREENS)
+   ═══════════════════════════════════════════════════════════════════════════ */
+.page {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.95);
+  transition: all 0.8s ease-in-out;
+}
+
+.page.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+/* Scrollable Pages (Gallery, Letter) */
+.page.scrollable {
+  justify-content: flex-start;
+  overflow-y: auto;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+/* Scrollbar styling */
+.page.scrollable::-webkit-scrollbar, .letter::-webkit-scrollbar {
+  width: 5px;
+}
+.page.scrollable::-webkit-scrollbar-thumb, .letter::-webkit-scrollbar-thumb {
+  background: #ffb3cc;
+  border-radius: 10px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   THE WHITE GLASS BOX
+   ═══════════════════════════════════════════════════════════════════════════ */
+.box {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 30px;
+  padding: 40px 30px;
+  max-width: 550px;
+  width: 100%;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 20px 50px rgba(255, 140, 180, 0.25);
+  position: relative;
+  z-index: 2;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TEXT & BUTTONS
+   ═══════════════════════════════════════════════════════════════════════════ */
+h1, h2 {
+  font-family: 'Pacifico', cursive;
+  font-weight: 400;
+  color: #ff5c8d;
+  text-shadow: 0 3px 10px rgba(255, 100, 150, 0.2);
+  margin-bottom: 15px;
+}
+h1 { font-size: 34px; }
+h2 { font-size: 28px; }
+
+p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+button {
+  border: none;
+  border-radius: 50px;
+  padding: 14px 36px;
+  background: linear-gradient(135deg, #ff9eb5, #ffc2d6);
+  color: #8a2be2;
+  color: #7a1f45;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(255, 120, 160, 0.4);
+  transition: transform 0.3s, box-shadow 0.3s;
+  font-family: inherit;
+  margin-top: 10px;
+}
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(255, 100, 150, 0.5);
+}
+button:active { transform: scale(0.98); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ELEMENTS: GIFTS, CARDS, ALBUM
+   ═══════════════════════════════════════════════════════════════════════════ */
+/* Big Emoji Gift */
+.gift-emoji {
+  font-size: 80px;
+  cursor: pointer;
+  animation: bounce 2s infinite;
+  display: inline-block;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 10px 15px rgba(255, 100, 150, 0.3));
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+/* Flip Cards */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.flip-card {
+  width: 100%;
+  aspect-ratio: 1;
+  perspective: 1000px;
+  cursor: pointer;
+}
+.flip-inner {
+  width: 100%; height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  position: relative;
+}
+.flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+.flip-front, .flip-back {
+  position: absolute; inset: 0;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  backface-visibility: hidden;
+  font-size: 14px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.flip-front { background: white; color: #ff5c8d; font-size: 24px; }
+.flip-back {
+  background: #ffeff5; color: #d6336c;
+  transform: rotateY(180deg);
+  font-weight: 600;
+  border: 1px solid #ffbad0;
+}
+
+/* Photo Album */
+.album-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  width: 100%;
+}
+.album-grid img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 15px;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: 0.3s;
+  background: #fff;
+}
+.album-grid img:hover { transform: scale(1.05); }
+
+/* Video Grid */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  width: 100%;
+}
+.video-thumb {
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+  cursor: pointer;
+  height: 180px;
+}
+.video-thumb video {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.video-thumb::after {
+  content: "▶";
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.3);
+  color: #fff; font-size: 40px;
+  backdrop-filter: blur(2px);
+}
+
+/* Voice & Letter */
+.voice-container {
+  background: #fff;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+}
+
+.long-letter {
+  background: repeating-linear-gradient(
+    #fff, #fff 29px, #ffeef5 30px
+  );
+  border-radius: 20px;
+  padding: 30px;
+  text-align: left;
+  line-height: 30px;
+  color: #555;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 20px;
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.8);
+  display: none;
+  justify-content: center; align-items: center;
+  z-index: 100;
+  padding: 20px;
+  animation: fadeIn 0.3s;
+}
+.lightbox img, .lightbox video {
+  max-width: 100%; max-height: 90vh;
+  border-radius: 10px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.5);
+}
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+/* Mobile Adjustments */
+@media (max-width: 600px) {
+  .box { padding: 30px 20px; }
+  h1 { font-size: 28px; }
+  h2 { font-size: 24px; }
+  .card-grid { grid-template-columns: repeat(3, 1fr); }
+  .gift-emoji { font-size: 70px; }
+  .album-grid img, .video-thumb { height: 140px; }
+}
+
+.time-box {
+  background: #fff0f5;
+  border-radius: 18px;
+  padding: 15px 12px;
+  min-width: 70px;
+  box-shadow: 0 5px 15px rgba(255,120,160,0.25);
+}
+
+.time-box span {
+  display: block;
+  font-size: 28px;
+  font-weight: 700;
+  color: #ff5c8d;
+}
+
+.time-box small {
+  font-size: 12px;
+  color: #777;
+}
+
+.album-grid img.big {
+  grid-column: span 2;
+  height: 260px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="confetti" id="confetti-container"></div>
+<div class="hearts" id="hearts-container"></div>
+
+<div class="app">
+
+  <section class="page active">
+    <div class="box">
+      <h1 id="intro-title">Happy aniversary 100 day!</h1>
+      <p id="intro-desc">Гүнждээ зориулсан бяцхан бэлэг...</p>
+      <div class="gift-emoji" onclick="goNext()">🎁</div>
+      <p style="font-size:13px; opacity:0.7">Бэлэг дээр дараарай</p>
+    </div>
+  </section>
+
+  <section class="page">
+    <div class="box">
+      <div class="gift-emoji" onclick="goNext()">🎂</div>
+      <h2>Юу байгаа бол?</h2>
+      <p>Чамайг гайхшруулах зүйлс энд байгаа гэж найдъя... Бэлэн үү?</p>
+      <button onclick="goNext()">Тийм ээ! 💖</button>
+    </div>
+  </section>
+
+  <section class="page">
+    <div class="box">
+      <h2>Хайрт чамдаа</h2>
+      <p>Карт бүр дээр дарж үгсийг нээгээрэй:</p>
+      <div class="card-grid" id="card-grid"></div>
+      <button onclick="goNext()">Дараагийн хэсэг рүү 🥰</button>
+    </div>
+  </section>
+
+  <section class="page scrollable">
+    <div class="box">
+      <h2>Бидний Дурсамж 📸</h2>
+      <p>Хамтдаа өнгөрүүлсэн хамгийн нандин мөчүүд...</p>
+      <div class="album-grid" id="photo-container"></div>
+      <button onclick="goNext()">Дараагийн хуудсыг үзэх үү? 🎥</button>
+    </div>
+  </section>
+
+  <!-- <section class="page scrollable">
+    <div class="box">
+      <h2>Хөдөлгөөнт Дурсамж</h2>
+      <p>Инээд хөөр, баяр баясалтай мөчүүд:</p>
+      <div class="video-grid" id="video-container"></div>
+      <button onclick="goNext()">Тусгай бэлэг рүү 🎁</button>
+    </div>
+  </section> -->
+
+  <!-- count up timer shu -->
+<section class="page">
+  <div class="box">
+    <h2>Бидний хамтдаа өнгөрүүлсэн хугацаа ⏳</h2>
+<p>25-10-22-ноос хойш…</p>
+
+
+    <div id="countdown" style="display:flex; gap:15px; justify-content:center; margin-top:20px;">
+      <div class="time-box">
+        <span id="days">0</span>
+        <small>Өдөр</small>
+      </div>
+      <div class="time-box">
+        <span id="hours">0</span>
+        <small>Цаг</small>
+      </div>
+      <div class="time-box">
+        <span id="minutes">0</span>
+        <small>Минут</small>
+      </div>
+      <div class="time-box">
+        <span id="seconds">0</span>
+        <small>Секунд</small>
+      </div>
+    </div>
+
+    <button onclick="goNext()"> ЗАХИДАЛ 💌</button>
+  </div>
+</section>
+
+
+
+  <section class="page scrollable">
+    <div class="box" style="background:rgba(255,255,255,0.96)">
+      <h2>Миний сэтгэлийн үгс</h2>
+      <div class="long-letter" id="letter-content">
+        </div>
+      <button onclick="goNext()"> ❤️</button>
+    </div>
+  </section>
+
+  <section class="page">
+    <div class="box">
+      <h2>Хайртай шүү! ❤️</h2>
+      <!-- <p>Өнөөдөр хамгийн жаргалтай өдөр чинь байх болтугай.</p> -->
+      <p>Үргэлж дандаа хамтдаа...</p>
+      <div style="font-size:60px; margin-top:20px;">💑</div>
+    </div>
+  </section>
+
+</div>
+
+<div class="lightbox" id="lightbox" onclick="this.style.display='none'; stopVideoPlayer()">
+  <img id="lb-img" style="display:none">
+  <video id="lb-video" controls style="display:none"></video>
+</div>
+
+<script>
+/* --------------------------------------------------------------
+   1. ТОХИРГООНЫ ХЭСЭГ (ЭНД ӨӨРЧЛӨЛТ ХИЙНЭ ҮҮ)
+   --------------------------------------------------------------
+*/
+const config = {
+  // Энд хайртай хүнийхээ нэрийг бичнэ
+  recipientName: "Хайрт Гүнждээ", 
+
+  // FLIP CARDS дээр гарах 10 үг (үг бүрийг хашилтад бичнэ)
+  flipWords: [
+    "Чи", "миний", "амьдралд", "ирсэн", "хамгийн",
+    "нандин", "гайхалтай", "бэлэг", "шүү", "❤️"
+  ],
+
+  // ЗУРГУУД: Фолдер доторх зургийн нэрсийг энд бичнэ.
+  // Жишээ нь: "images/photo1.jpg"
+  images: [
+    "images/image1.jpeg", 
+    "images/image2.jpeg", 
+    "images/image3.jpeg", 
+    "images/image5.jpg",
+    "images/image4.png",
+  ],
+
+  // ВИДЕОНУУД: Фолдер доторх видеоны нэрс.
+  videos: [
+    // "videos/video1.mov",
+    // "videos/video2.mov",
+    // "videos/video3.mov"
+  ],
+
+  // ДУУ/БИЧЛЭГ: 
+  // Хэрэв бэлэн дуу оруулах бол: "audio/song.mp3" гэж бич.
+  // Хэрэв сайт дээрээ шууд бичмээр байвал хоосон орхи: ""
+  audioFile: "audio/happy_birthday.mp3", 
+
+  // ЗАХИДАЛ: Энд урт захидлаа бичнэ. (\n гэдэг нь шинэ мөр гэсэн үг)
+  letter: `
+      Хайрт минь, 100 дахь өдрийн мэнд!🎂✨
+    Бидний өнгөрүүлсэн цаг хугацаа үнэхээр хурдан өнгөрчээ. Саяхан л өмнө нь суугаад бөгж өгөөд найз охиноо болгож авж байсан бол одоо чамтайгаа учирч, уйлж инээж, унаж босож явсаар өнөөдөр чамтайгаа 100 хоногийг хамтдаа үдсэн байна. Танилцаад ердөө л 7 сар гаруй хугацаа өнгөрсөн ч энэ хугацаанд бид хоёр үнэхээр олон зүйлийг хамтдаа давж гарлаа.
+
+  Одоо ч, ирээдүйд ч гэлээ би чамтайгаа хамт байхыг хүсдэг. Амьдралын ямар ч хэцүү үе ирсэн бай, бид хоёр гар гараасаа атгаад хамтдаа давж чадна гэдэгт би итгэдэг. Чи минь миний өглөө бүр инээмсэглэн сэрэх утга учир минь. Миний гүнж минь ээ, чамтай байхад бүх зүйл утгатай болдог.
+
+  Чамдаа би үгээр илэрхийлж барамгүй их хайртай. Энэ хайр минь өдөр өнгөрөх тусам багасах биш, улам гүнзгийрч, улам бат бөх болно. Миний зүрх чинийх шүү, үнжий 🤍 Үргэлж хамтдаа, хайр дүүрэн, инээмсэглэлээр дүүрэн байя.
+
+    Хайртай шүү, Гүнж ээ! ❤️
+    
+    Үнсье! 😘
+  `
+};
+
+/* --------------------------------------------------------------
+   2. ПРОГРАММЫН КОД (ӨӨРЧЛӨХ ШААРДЛАГАГҮЙ)
+   --------------------------------------------------------------
+*/
+
+// Init Content
+document.getElementById('intro-title').innerText = config.recipientName + " зориулав";
+document.getElementById('letter-content').innerText = config.letter;
+
+// Generate Flip Cards
+const grid = document.getElementById('card-grid');
+config.flipWords.forEach(word => {
+  const card = document.createElement('div');
+  card.className = 'flip-card';
+  card.innerHTML = `
+    <div class="flip-inner">
+      <div class="flip-front">❓</div>
+      <div class="flip-back">${word}</div>
+    </div>
+  `;
+  card.onclick = () => card.classList.add('flipped');
+  grid.appendChild(card);
+});
+
+// Generate Photos
+const album = document.getElementById('photo-container');
+config.images.forEach((src, index) => {
+  const img = document.createElement('img');
+  img.src = src;
+
+  // Хамгийн сүүлийн зургийг том болгох
+  if (index === config.images.length - 1) {
+    img.classList.add('big');
+  }
+
+  img.onclick = () => openLightbox('img', src);
+  album.appendChild(img);
+});
+
+// Generate Videos
+// const vidContainer = document.getElementById('video-container');
+// config.videos.forEach(src => {
+//   const div = document.createElement('div');
+//   div.className = 'video-thumb';
+//   div.innerHTML = `<video src="${src}" muted></video>`;
+//   div.onclick = () => openLightbox('video', src);
+//   vidContainer.appendChild(div);
+// });
+
+// // Audio Logic
+// const audioEl = document.getElementById('main-audio');
+// if(config.audioFile && config.audioFile !== "") {
+//   audioEl.src = config.audioFile;
+// } else {
+//   // Show recorder if no file provided
+//   document.getElementById('recorder-ui').style.display = 'block';
+//   audioEl.style.display = 'none'; // hide player initially
+// }
+
+// Navigation Logic
+const pages = document.querySelectorAll('.page');
+let currentPage = 0;
+
+function goNext() {
+  if (currentPage < pages.length - 1) {
+    pages[currentPage].classList.remove('active');
+    currentPage++;
+    pages[currentPage].classList.add('active');
+  }
+}
+
+// Lightbox Logic
+const lb = document.getElementById('lightbox');
+const lbImg = document.getElementById('lb-img');
+const lbVid = document.getElementById('lb-video');
+
+function openLightbox(type, src) {
+  lb.style.display = 'flex';
+  if (type === 'img') {
+    lbImg.src = src;
+    lbImg.style.display = 'block';
+    lbVid.style.display = 'none';
+  } else {
+    lbVid.src = src;
+    lbVid.style.display = 'block';
+    lbImg.style.display = 'none';
+    lbVid.play();
+  }
+}
+
+function stopVideoPlayer() {
+  lbVid.pause();
+  lbVid.currentTime = 0;
+}
+
+// Background Animation Generation
+const confettiCont = document.getElementById('confetti-container');
+const heartsCont = document.getElementById('hearts-container');
+
+function createParticles(container, count, colorFn) {
+  for(let i=0; i<count; i++) {
+    const s = document.createElement('span');
+    s.style.left = Math.random() * 100 + 'vw';
+    s.style.animationDuration = (Math.random() * 3 + 4) + 's';
+    s.style.animationDelay = Math.random() * 5 + 's';
+    if(colorFn) s.style.background = colorFn();
+    container.appendChild(s);
+  }
+}
+
+createParticles(confettiCont, 50, () => {
+  const colors = ['#ff6b9d', '#ffb3cc', '#b3e0ff', '#ffe680'];
+  return colors[Math.floor(Math.random()*colors.length)];
+});
+
+createParticles(heartsCont, 20); // Hearts default to red/pink in CSS
+
+// Simple Audio Recorder Logic
+let mediaRecorder;
+let audioChunks = [];
+
+async function startRec() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaRecorder = new MediaRecorder(stream);
+    audioChunks = [];
+    mediaRecorder.ondataavailable = event => audioChunks.push(event.data);
+    mediaRecorder.onstop = () => {
+      const audioBlob = new Blob(audioChunks, { type: 'audio/mp3' });
+      const audioUrl = URL.createObjectURL(audioBlob);
+      audioEl.src = audioUrl;
+      audioEl.style.display = 'block';
+      audioEl.controls = true;
+    };
+    mediaRecorder.start();
+    alert("Бичиж эхэллээ... Ярьж дуусаад 'Зогс' товчийг дараарай.");
+  } catch(e) {
+    alert("Микрофон зөвшөөрөгдсөнгүй.");
+  }
+}
+function stopRec() {
+  if(mediaRecorder) mediaRecorder.stop();
+}
+
+/* --------------------------------------------------------------
+   COUNT UP TIMER 
+-------------------------------------------------------------- */
+
+// ⏱ ЭХЛЭХ ОГНОО (2025-10-22)
+const startDate = new Date("2025-10-22T00:00:00").getTime();
+
+const daysEl = document.getElementById("days");
+const hoursEl = document.getElementById("hours");
+const minutesEl = document.getElementById("minutes");
+const secondsEl = document.getElementById("seconds");
+
+function updateTimer() {
+  const now = new Date().getTime();
+  const diff = now - startDate;
+
+  if (diff < 0) return; // эхлэх өдрөөс өмнө бол юу ч харуулахгүй
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
+
+  daysEl.innerText = days;
+  hoursEl.innerText = hours;
+  minutesEl.innerText = minutes;
+  secondsEl.innerText = seconds;
+}
+
+updateTimer();
+setInterval(updateTimer, 1000);
+
+
+</script>
+</body>
+</html>
