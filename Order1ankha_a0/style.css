@@ -1,0 +1,922 @@
+:root {
+  --primary-pink: #ff5fa2;
+  --bg-pink: #ffd6e8;
+  --card-bg: #ffeef6;
+  --text-dark: #d63384;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh; /* height: 100vh-ийг min-height болгож солино */
+  background-color: #fce4ec; 
+  background-image: radial-gradient(#ff85b3 0.5px, transparent 0.5px);
+  background-size: 20px 20px;
+  display: flex;
+  flex-direction: column; /* Элементүүдийг дээрээс доош цувуулна */
+  align-items: center;
+  overflow-y: auto; /* Доош гүйлгэх боломжтой болгоно */
+  overflow-x: hidden;
+  padding: 20px 0; /* Дээр болон доор бага зэрэг зай авна */
+}
+/* Чимэглэлийн элементүүдийг байрлуулах */
+.bg-decorations {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1; /* Контейнерын ард гаргана */
+    overflow: hidden;
+    pointer-events: none; /* Карт дээр дарахад саад болохгүй */
+}
+
+.deco {
+    position: absolute;
+    width: 60px; /* GIF-ийн хэмжээ */
+    height: auto;
+    transition: all 0.5s ease; /* Байршил солигдоход зөөлөн харагдана */
+}
+
+/* Хуанли баруун дээр */
+.calendar {
+  top: 5%;
+  right: 5%;
+}
+
+/* Хөвөх хөдөлгөөн (Animation) */
+@keyframes floatPlane {
+  0%, 100% { transform: translate(0, 0) rotate(-15deg); }
+  50% { transform: translate(15px, -15px) rotate(-10deg); }
+}
+
+/* Зүрхнүүд хөвөх */
+.floating-hearts span {
+  position: absolute;
+  font-size: 20px;
+  animation: heartFloat 6s linear infinite;
+}
+.container {
+  flex: 0 0 auto; /* Өндрийг нь агуулгаар нь авна */
+  display: flex;
+  flex-direction: column; /* Доторх контентоо дээрээс доош өрнө */
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  background: var(--card-bg);
+  padding: 30px;
+  border-radius: 30px;
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  margin: auto; /* Босоо болон хэвтээ тэнхлэгт голлуулна */
+  box-shadow: 0 10px 25px rgba(255, 95, 162, 0.2);
+  border: 4px solid white;
+  min-height: 300px; /* Хамгийн бага өндөр */
+}
+
+.hidden { display: none; }
+
+h1 { color: var(--text-dark); font-size: 1.5rem; margin-bottom: 20px; }
+.title-pink { color: var(--primary-pink); text-transform: uppercase; font-size: 1.2rem; }
+
+/* Buttons */
+button {
+  cursor: pointer;
+  transition: transform 0.2s, background 0.3s;
+  border: none;
+  font-family: inherit;
+}
+
+button:active { transform: scale(0.9); }
+
+.yes-btn {
+  background: var(--primary-pink);
+  color: white;
+  padding: 12px 25px;
+  border-radius: 50px;
+  font-weight: bold;
+}
+
+.no-btn {
+  background: #fff;
+  color: #888;
+  padding: 12px 25px;
+  border-radius: 50px;
+}
+
+.grid-menu {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  width: 100%; /* Бүтэн өргөнөөр нь */
+  box-sizing: border-box;
+}
+
+/* Scrollbar-ын загвар (Chrome, Edge, Safari) */
+.grid-menu::-webkit-scrollbar {
+  width: 6px;
+}
+
+.grid-menu::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.grid-menu::-webkit-scrollbar-thumb {
+  background-color: #ffdeeb;
+  border-radius: 10px;
+}
+
+.card {
+  /* Картууд scroll хийх үед шахагдахгүй байх тохиргоо */
+  min-height: 100px; 
+}
+
+/* Карт бүрийн загвар */
+.card {
+  background: #ffdeeb; /* Скриншот дээрх зөөлөн ягаан өнгө */
+  padding: 20px 10px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+/* Хулгана очиход бага зэрэг томорч, хүрээ нь тодорно */
+.card:hover {
+  transform: translateY(-5px);
+  background: #ffd1e3;
+  border-color: #ffb1d1;
+}
+
+/* Зураг/Icon-ны хэмжээ */
+.card-icon {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Зургийг сунгахгүйгээр багтаана */
+}
+
+/* Картын доорх текст */
+.card span {
+  color: #d63384;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Coupons */
+.coupon-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.coupon {
+  background: white;
+  padding: 15px 5px;
+  border: 2px dashed var(--primary-pink);
+  border-radius: 10px;
+  font-size: 0.8rem;
+}
+
+.letter-box {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  font-style: italic;
+  line-height: 1.6;
+  text-align: left;
+}
+
+input {
+  width: 80%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid var(--primary-pink);
+  margin-bottom: 10px;
+}
+
+/* Confetti Styles энд хэвээрээ байна... */
+/* GIF болон Зургийн хэмжээ */
+.gif-img {
+  width: 100%;
+  max-width: 180px; /* GIF-ний хэмжээ */
+  height: auto;
+  margin-bottom: 15px;
+  border-radius: 15px;
+}
+
+/* Зургийн цомгийн үндсэн хэсэг */
+.photo-album {
+  position: relative;
+  height: 350px; /* Зургууд байрлах зай */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+/* Polaroid жаазны стиль */
+.polaroid {
+  background: white;
+  padding: 10px 10px 25px 10px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  position: absolute;
+  width: 130px;
+  border-radius: 2px;
+}
+
+.polaroid img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+}
+
+/* Зүүн талын зураг */
+.p1 {
+  left: 0;
+  transform: rotate(-10deg);
+  z-index: 2;
+}
+
+/* Баруун талын зураг */
+.p2 {
+  right: 0;
+  transform: rotate(10deg);
+  z-index: 1;
+}
+
+/* Голын босоо зургийн тууз */
+.photo-strip-v {
+  background: white;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  width: 70px;
+  z-index: 3;
+}
+
+.photo-strip-v img {
+  width: 100%;
+  height: 60px;
+  object-fit: cover;
+}
+
+/* Дэлгэцийн хэмжээнээс хамаарч зургийн хэмжээг тохируулах */
+@media (max-width: 400px) {
+  .polaroid { width: 110px; }
+  .photo-strip-v { width: 60px; }
+}
+/* Хуудасны үндсэн картын өндрийг нэмэх */
+.photo-card {
+  min-height: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: visible !important; /* Поларойд илүү гарч харагдахад хэрэгтэй */
+}
+
+.photo-display-area {
+  position: relative;
+  height: 300px;
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Поларойд жаазны ерөнхий загвар */
+.polaroid-frame {
+  background: white;
+  padding: 8px 8px 20px 8px; /* Доод талдаа илүү зайтай */
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  position: absolute;
+  width: 120px;
+  border-radius: 4px;
+  transition: transform 0.3s ease;
+  z-index: 1;
+}
+
+.polaroid-frame img {
+  width: 100%;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+/* Зүүн талын зураг - Screenshot шиг бага зэрэг хазайсан */
+.p-left {
+  left: -10px;
+  transform: rotate(-12deg);
+}
+
+/* Баруун талын зураг - Эсрэг тал руу хазайсан */
+.p-right {
+  right: -10px;
+  transform: rotate(12deg);
+}
+
+/* Босоо зургийн тууз (Film Strip) */
+.film-strip {
+  background: white;
+  padding: 6px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+  width: 75px;
+  z-index: 10; /* Бусад зургийнхаа дээр гарна */
+  max-height: 280px;
+  overflow-y: auto; /* Олон зураг байвал гүйлгэж харна */
+  border-radius: 4px;
+}
+
+/* Тууз доторх зургууд хоорондын зай */
+.strip-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.strip-inner img {
+  width: 100%;
+  height: 65px;
+  object-fit: cover;
+}
+
+/* Scrollbar-г цэвэрхэн болгох */
+.film-strip::-webkit-scrollbar {
+  width: 3px;
+}
+.film-strip::-webkit-scrollbar-thumb {
+  background: #ff85b3;
+  border-radius: 10px;
+}
+
+/* Поларойд дээр хулгана очиход бага зэрэг томорно */
+.polaroid-frame:hover {
+  z-index: 20;
+  transform: scale(1.1) rotate(0deg);
+}
+/* Томруулж харах үеийн загвар */
+.viewer-overlay {
+  display: none; /* Эхлээд харагдахгүй */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.8); /* Ард тал нь хар саарал болно */
+  backdrop-filter: blur(5px); /* Ард талыг бүдгэрүүлнэ */
+  justify-content: center;
+  align-items: center;
+  cursor: zoom-out;
+}
+
+.viewer-content {
+  max-width: 90%;
+  max-height: 80%;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(255,255,255,0.2);
+  animation: zoomIn 0.3s ease; /* Гарч ирэх эффект */
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 35px;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
+/* Үндсэн фон болон хээ */
+body {
+  margin: 0;
+  background-color: #fce4ec;
+  background-image: radial-gradient(#ff85b3 0.5px, transparent 0.5px);
+  background-size: 20px 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Сүүлийн сюрприз: Нэр оруулах хэсэг */
+#nameInput {
+  padding: 12px 20px;
+  border-radius: 25px;
+  border: 2px solid #ffdeeb;
+  margin-bottom: 20px;
+  outline: none;
+  text-align: center;
+  width: 80%;
+}
+
+/* Купон картуудын загвар (Page 9) */
+.coupon-grid-final {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.coupon-card {
+  background: white;
+  padding: 15px;
+  border-radius: 15px;
+  border: 2px dashed #ffb1d1;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.coupon-card p {
+  color: #d63384;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.expiry {
+  font-size: 0.7rem;
+  color: #ff85b3;
+}
+.playlist-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 5px;
+}
+
+.track-card {
+  background: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid #ffdeeb;
+}
+
+.track-card:hover {
+  background: #ffdeeb;
+  transform: translateX(5px);
+}
+
+.play-icon {
+  background: var(--primary-pink);
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  margin-right: 15px;
+}
+
+.track-info {
+  text-align: left;
+}
+
+.track-name {
+  color: var(--text-dark);
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.artist {
+  color: #ff85b3;
+  font-size: 0.75rem;
+  margin: 0;
+}
+
+/* Гүйлгэдэг хэсгийг цэвэрхэн болгох */
+.playlist-container::-webkit-scrollbar {
+  width: 4px;
+}
+.playlist-container::-webkit-scrollbar-thumb {
+  background: #ffb1d1;
+  border-radius: 10px;
+}
+.track-card.active-track {
+    background: #ffb1d1 !important;
+    border: 1px solid var(--primary-pink);
+    transform: scale(1.02);
+}
+
+.play-icon {
+    transition: all 0.2s ease;
+    min-width: 30px; /* Дүрс өөрчлөгдөхөд хэмжээ нь хөдлөхөөс сэргийлнэ */
+}
+/* Ерөнхий товчлуурын суурь загвар */
+button {
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  font-weight: bold;
+  font-size: 1rem;
+  padding: 14px 28px;
+  border-radius: 50px; /* Дугуй хэлбэртэй */
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Илүү зөөлөн хөдөлгөөн */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 10px 5px;
+}
+
+/* Дээр нь очих үед (Hover) */
+button:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(255, 95, 162, 0.3);
+}
+
+/* Дарах үед (Active) */
+button:active {
+  transform: translateY(0) scale(0.95);
+}
+
+/* "Үргэлжлүүлэх" болон "Тийм" товч (Гол үйлдэл) */
+.yes-btn, .next-btn {
+  background: linear-gradient(135deg, #ff5fa2, #ff85b3);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.yes-btn:hover, .next-btn:hover {
+  background: linear-gradient(135deg, #ff3d91, #ff5fa2);
+}
+
+/* "Буцах" болон "Дахиад оролдох" товч (Туслах үйлдэл) */
+.back-btn, .retry-btn {
+  background: white;
+  color: #d63384;
+  border: 2px solid #ffdeeb;
+}
+
+.back-btn:hover, .retry-btn:hover {
+  background: #fff5f8;
+  border-color: #ffb1d1;
+}
+
+/* "Үгүй" товч (Зөөлөн харагдах) */
+.no-btn {
+  background: #f0f0f0;
+  color: #888;
+  transition: all 0.2s ease;
+}
+
+/* Нэр оруулах хэсгийн товчийг тусад нь гоё болгох */
+#page8 .next-btn {
+  width: 80%;
+  background: linear-gradient(135deg, #ff85b3, #ffb1d1);
+}
+.todo-style {
+  text-align: left;
+  list-style: none;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 15px;
+  margin-bottom: 20px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.todo-style li {
+  margin-bottom: 8px;
+  color: #d63384;
+  font-weight: 500;
+  border-bottom: 1px dashed #ffb1d1;
+  padding-bottom: 5px;
+}
+
+.input-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+#todoInput {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid #ffdeeb;
+  border-radius: 20px;
+  outline: none;
+}
+
+.add-btn {
+  background: #ff85b3;
+  color: white;
+  padding: 5px 15px;
+  font-size: 0.8rem;
+}
+
+.download-btn {
+  background: #4CAF50 !important; /* Ногоон өнгө хадгалах товчлуур дээр */
+  color: white;
+  width: 100%;
+  margin-bottom: 10px;
+}
+.camera-container {
+    position: relative;
+    border: 5px solid #ffdeeb;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #000;
+    min-height: 250px;
+}
+
+#afterPhotoBtns {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.hidden {
+    display: none !important;
+}
+.camera-container {
+    position: relative;
+    border: 5px solid #ffdeeb;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #000;
+}
+
+#video {
+    width: 100%;
+    transform: scaleX(-1); /* Selfie view */
+}
+
+#photoCanvas {
+    width: 100%;
+}
+
+.countdown-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 80px;
+    color: white;
+    font-weight: bold;
+    text-shadow: 0 0 20px rgba(255, 95, 162, 0.8);
+    z-index: 10;
+}
+
+.timer-selector {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 10px;
+    background: #fff5f8;
+    padding: 8px;
+    border-radius: 15px;
+    font-size: 0.9rem;
+}
+
+.timer-selector input {
+    accent-color: #ff5fa2;
+}
+
+.download-btn {
+    background: #4CAF50 !important;
+    color: white;
+}
+.filter-selector {
+    margin-bottom: 10px;
+}
+
+.filter-selector select {
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 2px solid #ffdeeb;
+    background: white;
+    color: #d63384;
+    font-family: inherit;
+    outline: none;
+    cursor: pointer;
+    width: 80%;
+}
+
+/* Видео дээр шүүлтүүр зөөлөн солигдох эффект */
+#video, #photoCanvas {
+    transition: filter 0.3s ease;
+}
+/* Камерын контейнер доторх GIF-үүдийн байршил */
+.camera-container {
+  position: relative; /* Доторх зүйлсийг абсолют байрлуулахын тулд */
+  border: 8px solid #fff;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  background: #000;
+  overflow: hidden;
+}
+
+.cam-deco {
+  position: absolute;
+  width: 50px; /* GIF-ийн хэмжээ */
+  height: auto;
+  z-index: 5; /* Видеоны дээр гаргана */
+  pointer-events: none; /* Хулганаар дарахад саад болохгүй */
+}
+
+.top-left { top: 10px; left: 10px; }
+.top-right { top: 10px; right: 10px; }
+.bottom-left { bottom: 10px; left: 10px; }
+.bottom-right { bottom: 10px; right: 10px; }
+
+/* Таймер болон шүүлтүүрийг нэг мөрөнд */
+.controls-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.timer-selector, .filter-selector select {
+  font-size: 0.8rem;
+  padding: 5px;
+}
+.filter-wrapper {
+  margin: 15px 0;
+  text-align: center;
+}
+
+.filter-label {
+  font-size: 0.8rem;
+  color: #d63384;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.filter-options {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap; /* Олон шүүлтүүр байвал доошоо шилжинэ */
+}
+
+.filter-btn {
+  background: white;
+  border: 2px solid #ffdeeb;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  color: #ff5fa2;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.filter-btn:hover {
+  background: #fff5f8;
+  transform: translateY(-2px);
+}
+
+.filter-btn.active {
+  background: #ff5fa2;
+  color: white;
+  border-color: #ff5fa2;
+  box-shadow: 0 4px 10px rgba(255, 95, 162, 0.3);
+}
+.video-wrapper {
+  width: 100%;
+  max-width: 350px; /* Бичлэгийн өргөнийг тохируулах */
+  border: 5px solid #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(255, 182, 193, 0.4);
+  background: #000;
+  margin: 15px auto;
+}
+
+#specialVideo {
+  width: 100%;
+  display: block;
+}
+
+.video-message {
+  font-size: 0.9rem;
+  color: #d63384;
+  margin: 10px 0;
+  font-style: italic;
+}
+.bottle-area {
+  position: relative;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Лонх сэгсрэх хөдөлгөөн */
+.bottle-shake {
+  animation: shake 2s infinite;
+}
+
+@keyframes shake {
+  0% { transform: rotate(0deg); }
+  10% { transform: rotate(5deg); }
+  20% { transform: rotate(-5deg); }
+  30% { transform: rotate(5deg); }
+  40% { transform: rotate(0deg); }
+}
+
+/* Зурвасын загвар */
+.letter-popup {
+  background: #fdf5e6; /* Цаас шиг өнгө */
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  width: 80%;
+  position: relative;
+  border-left: 10px solid #e3d5b8;
+  animation: popIn 0.5s ease-out;
+}
+
+@keyframes popIn {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.letter-content p {
+  font-family: 'Cursive', serif;
+  color: #5d4037;
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+
+.close-letter {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 20px;
+  color: #8d6e63;
+  cursor: pointer;
+}
+.footer-container {
+    width: 100%;
+    padding: 25px 0;
+    background: rgba(255, 255, 255, 0.6); /* Арай тод болгосон */
+    backdrop-filter: blur(10px);
+    text-align: center;
+    border-top: 1px solid rgba(255, 182, 193, 0.4);
+    margin-top: 40px; /* Контейнероос доош зай авна */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    position: relative; /* Fixed биш байх ёстой */
+}
+
+.brand-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-mini-logo {
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+}
+
+.legal-info p {
+  margin: 4px 0;
+  font-size: 0.7rem;
+  color: #888;
+}
+
+.ip-notice {
+  font-style: italic;
+  opacity: 0.7;
+}
+
+/* Page контейнерууд footer-тэй давхцахгүй байхын тулд */
+.container {
+  padding-bottom: 20px;
+}

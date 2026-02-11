@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Валентин ❤️</title>
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-decorations">
+    <img src="images/cat.gif" class="deco cat">
+    <img src="images/calendar.gif" class="deco calendar">
+    <img src="images/dino.gif" class="deco dino">
+    <img src="images/dog.gif" class="deco dog">
+    <img src="images/zzz.gif" class="deco zzz">
+  </div>
+
+  <div class="container" id="page1">
+    <img src="images/penguin.gif" class="gif-img" alt="Milk Mocha Bear">
+    <p class="subtitle">Сайн уу, хөөрхөнөө ✨</p>
+    <h1 class="main-title">Will you be my valentine ?🌸 solamira</h1>
+    <div class="buttons">
+      <button class="yes-btn" onclick="yesClick()">ТЭГЬЕ 😍</button>
+      <button class="no-btn" id="noBtn" onmouseover="moveNo()" onclick="noClick()">ҮГҮЙ ЭЭ 🙊</button>
+    </div>
+  </div>
+
+  <div class="container hidden" id="page2">
+    <img src="images/penguin.gif" class="gif-img">
+    <h1>Чамд таалагдана гэж амлая, дахиад бодоод үз л дээ 💗</h1>
+    <button class="retry-btn" onclick="goBack()">Дахиад оролдох</button>
+  </div>
+
+  <div class="container hidden" id="page3">
+    <h1 class="title-pink">ЧАМД ЗОРИУЛСАН ЦЭЦЭГ</h1>
+    <img src="images/boquet.jpg" class="gif-img">
+    <p>Чамдаа би чинь маш их хайртай шүү 💗</p>
+    <button class="next-btn" onclick="show('page4')">Үргэлжлүүлэх ✨</button>
+  </div>
+
+ <div class="container hidden" id="page4">
+  <div class="main-card">
+    <h1 class="title-pink">Зөвхөн чамдаа зориулсан бэлгүүд 💝</h1>
+    <p class="hint">Доошоо гүйлгэж бүгдийг үзээрэй 😍</p>
+    
+    <div class="grid-menu">
+      <div class="card" onclick="show('page5')">
+        <div class="card-icon"><img src="images/camera.gif"></div>
+        <span>Дурсамжууд</span>
+      </div>
+      <div class="card" onclick="show('page6')">
+        <div class="card-icon"><img src="images/myletter.gif"></div>
+        <span>Захидал</span>
+      </div>
+      <div class="card" onclick="show('page7')">
+        <div class="card-icon"><img src="images/coupons.gif"></div>
+        <span>Купон</span>
+      </div>
+      <div class="card" onclick="show('page10')">
+        <div class="card-icon"><img src="images/to-do.gif"></div>
+        <span>Хамтдаа...</span>
+      </div>
+      <div class="card" onclick="show('page11')">
+        <div class="card-icon"><img src="images/reasons.gif"></div>
+        <span>Шалтгаан</span>
+      </div>
+      <div class="card" onclick="openPhotoBooth()">
+        <div class="card-icon"><img src="images/photo-booth.gif"></div>
+        <span>Photo Booth</span>
+      </div>
+      <!-- <div class="card" onclick="show('page13')">
+        <div class="card-icon"><img src="images/video-icon.gif"></div>
+        <span>Бичлэг</span>
+      </div> -->
+      <div class="card" onclick="openBottlePage()">
+        <div class="card-icon"><img src="images/bottle.gif"></div>
+        <span>Зурвас 🍾</span>
+      </div>
+      <div class="card" onclick="show('page8')">
+        <div class="card-icon"><img src="images/surprise.gif"></div>
+        <span>Сюрприз</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="container hidden" id="page5">
+    <div class="main-card photo-card">
+      <h1 class="title-pink">Насан туршдаа дурсах мөчүүд</h1>
+      <div class="photo-display-area">
+        <div class="polaroid-frame p-left"><img src="images/1.jpeg" onclick="openImage(this)"></div>
+        <div class="film-strip">
+          <div class="strip-inner">
+            <img src="images/1.jpeg" onclick="openImage(this)">
+            <img src="images/2.jpeg" onclick="openImage(this)">
+            <img src="images/3.png" onclick="openImage(this)">
+            <img src="images/4.png" onclick="openImage(this)">
+          </div>
+        </div>
+        <div class="polaroid-frame p-right"><img src="images/2.jpeg" onclick="openImage(this)"></div>
+      </div>
+      <button class="back-btn" onclick="show('page4')">Буцах</button>
+    </div>
+  </div>
+
+  <div class="container hidden" id="page6">
+    <h1 class="title-pink">Сэтгэлийн үгс 💌</h1>
+    <div class="letter-box">
+      <p>Хайртай гүнждээ...</p>
+      <p>өч
+Чи миний амьдралд орж ирсэн тэр өдрөөс хойш бүх зүйл гэрэл гэгээтэй, утга учиртай болсон.
+    Өглөө бүр чиний инээмсэглэлийг харах, орой бүр чиний дуу хоолойг сонсох нь надад хамгийн том аз жаргал.
+
+    Чи бол миний хувьд зүгээр нэг хайртай хүн минь биш, миний хамгийн сайн найз, миний түшиг тулгуур.
+    
+    Ирээдүйд биднийг маш олон сайхан мөчүүд хүлээж байгаа гэдэгт би итгэлтэй байна. 
+    Би үргэлж чинийхээ талд, чамайг дэмжиж, хайрлаж явах болно.
+    
+    Хайртай шүү, Гүнж ээ! ❤️
+    
+    Үнсье! 😘
+      </div>
+    <button class="back-btn" onclick="show('page4')">Буцах</button>
+  </div>
+
+  <div class="container hidden" id="page7">
+    <h1 class="title-pink">Хайрын купонууд</h1>
+    <div class="coupon-grid-simple">
+      <div class="coupon">Кино үзэх эрх 🍿</div>
+      <div class="coupon">Хязгааргүй тэврэлт 🤗</div>
+      <div class="coupon">Зөндөө их дессерт 🍰</div>
+    </div>
+    <button class="back-btn" onclick="show('page4')">Буцах</button>
+  </div>
+
+  <div class="container hidden" id="page8">
+    <img src="images/aftersurprise.gif" class="gif-img">
+    <h1 class="title-pink">Сүүлчийн гэнэтийн бэлэг...</h1>
+    <input type="text" id="nameInput" placeholder="Нэрээ бичээрэй">
+    <button class="next-btn" onclick="checkName()">Нээх</button>
+    <button class="back-btn" onclick="show('page4')">Буцах</button>
+  </div>
+
+  <div class="container hidden" id="page9">
+    <div class="main-card">
+      <img src="images/sleepy-cat.gif" class="gif-img" style="max-width: 120px;">
+      <h1 class="title-pink">Бидний Playlist 🌙</h1>
+      <p class="hint" style="font-size: 0.8rem;">Намайг санавал сонсоорой...</p>
+      <audio id="audioPlayer"></audio>
+      <div class="playlist-container">
+        <div class="track-card" onclick="playMusic('music/blue.mp3', this)">
+          <div class="play-icon">▶</div>
+          <div class="track-info">
+            <p class="track-name">Blue</p>
+            <p class="artist">Yung kai</p>
+          </div>
+        </div>
+        <div class="track-card" onclick="playMusic('music/baigaljingoo.mp3', this)">
+          <div class="play-icon">▶</div>
+          <div class="track-info">
+            <p class="track-name">Байгальжингоо</p>
+            <p class="artist">Azirtaij</p>
+          </div>
+        </div>
+      </div>
+      <button class="back-btn" style="margin-top: 20px;" onclick="stopMusic()">Буцах</button>
+    </div>
+  </div>
+
+  <div class="container hidden" id="page10">
+    <div class="main-card">
+      <h1 class="title-pink">Бидний төлөвлөгөө ✨</h1>
+      <p class="hint">Хамтдаа хийх зүйлсээ бичээд хадгалаарай</p>
+      <div id="exportArea" class="bucket-content">
+        <ul id="todoList" class="todo-style">
+        </ul>
+      </div>
+      <div class="input-group">
+        <input type="text" id="todoInput" placeholder="Юу хиймээр байна?">
+        <button class="add-btn" onclick="addItem()">Нэмэх</button>
+      </div>
+      <div class="action-buttons">
+        <button class="download-btn" onclick="downloadList()" style="background: #4CAF50; width: 100%; margin-bottom: 10px;">Файлаар татах 💾</button>
+        <button class="back-btn" onclick="show('page4')">Буцах</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container hidden" id="page11">
+    <div class="main-card">
+      <h1 class="title-pink">Хайртай шалтгаанууд ❤️</h1>
+      <p>1. Чиний инээмсэглэл 🌸</p>
+      <p>2. Чиний зөөлөн сэтгэл ✨</p>
+      <p>3. Намайг үргэлж ойлгодогт 💗</p>
+      <button class="back-btn" onclick="show('page4')">Буцах</button>
+    </div>
+  </div>
+
+<div class="container hidden" id="page12">
+  <div class="main-card">
+    <h1 class="title-pink">Зөвхөн бидний зургийн студио 📸</h1>
+    
+    <div class="controls-row">
+        <div id="timerOptions" class="timer-selector">
+            <label><input type="radio" name="timer" value="3" checked> 3с</label>
+            <label><input type="radio" name="timer" value="5"> 5с</label>
+            <label><input type="radio" name="timer" value="10"> 10с</label>
+        </div>
+        <div class="filter-selector">
+            <div class="filter-wrapper">
+  <p class="filter-label">Шүүлтүүр сонгох ✨</p>
+  <div class="filter-options">
+    <button class="filter-btn active" onclick="applyFilter('none', this)">Эффэктгүй</button>
+    <button class="filter-btn" onclick="applyFilter('soft', this)">Зөөлөн 🌸</button>
+    <button class="filter-btn" onclick="applyFilter('vintage', this)">Хуучны🎞️</button>
+    <button class="filter-btn" onclick="applyFilter('bw', this)">Хар Цагаан🖤</button>
+    <button class="filter-btn" onclick="applyFilter('warm', this)">Дулаан ☀️</button>
+  </div>
+</div>
+        </div>
+    </div>
+
+    <div class="camera-container">
+      <div id="countdown" class="countdown-overlay hidden"></div>
+      
+      <img src="images/sparkle.gif" class="cam-deco top-left">
+      <img src="images/heart-pixel.gif" class="cam-deco top-right">
+      <img src="images/cat-wave.gif" class="cam-deco bottom-left">
+      <img src="images/star.gif" class="cam-deco bottom-right">
+
+      <video id="video" autoplay playsinline style="transform: scaleX(-1); width: 100%; border-radius: 15px;"></video>
+      <canvas id="photoCanvas" class="hidden" style="width: 100%; border-radius: 15px;"></canvas>
+    </div>
+
+    <div class="action-buttons" style="margin-top: 15px;">
+      <button id="snapBtn" class="yes-btn" onclick="startTimer()">Зураг авах ✨</button>
+      <div id="afterPhotoBtns" class="hidden">
+        <button class="download-btn" onclick="downloadPhoto()" style="background: #4CAF50; margin-bottom: 5px; width: 100%;">Хадгалах</button>
+        <button class="retry-btn" onclick="retakePhoto()" style="background: #ff4d4d; color: white; width: 100%;">Устгах</button>
+      </div>
+    </div>
+    <button class="back-btn" style="margin-top: 10px;" onclick="closePhotoBooth()">Буцах</button>
+  </div>
+</div>
+
+<!-- <div class="container hidden" id="page13">
+  <div class="main-card">
+    <h1 class="title-pink">Бидний нандин мөч 🎥</h1>
+    
+    <div class="video-wrapper">
+      <video id="specialVideo" controls playsinline>
+        <source src="video/bid.mp4" type="video/mp4">
+        Таны хөтөч бичлэг тоглуулахыг дэмжихгүй байна.
+      </video>
+    </div>
+
+    <div class="video-message">
+      <p>Чамтай хамт өнгөрүүлсэн хором бүр нандин... ❤️</p>
+    </div>
+
+    <button class="back-btn" onclick="pauseVideo()">Буцах</button>
+  </div>
+</div> -->
+<div class="container hidden" id="page15">
+  <div class="main-card">
+    <h1 class="title-pink">Зурвастай лонх 🍾</h1>
+    <p class="hint">Өдөрт лонхон дээр 1 дарж зурвасаа нээгээрэй</p>
+    
+    <div class="bottle-area" onclick="openMessage()">
+      <div id="bottle" class="bottle-shake">
+        <img src="images/bottle.gif" alt="Bottle" style="width: 180px;">
+      </div>
+      <div id="letterPopup" class="letter-popup hidden">
+        <div class="letter-content">
+          <span class="close-letter" onclick="closeLetter(event)">&times;</span>
+          <p id="randomMessage">Энд чиний зурвас харагдана...</p>
+        </div>
+      </div>
+    </div>
+
+    <button class="back-btn" style="margin-top: 30px;" onclick="show('page4')">Буцах</button>
+  </div>
+</div>
+
+  <div id="imageViewer" class="viewer-overlay" onclick="closeImage()">
+    <span class="close-btn">&times;</span>
+    <img class="viewer-content" id="fullImage">
+  </div>
+
+  <div id="confetti"></div>
+  <script src="script.js"></script>
+  <footer class="footer-container">
+  <div class="footer-content">
+    <div class="brand-info">
+      <img src="images/logo.png" alt="Logo" class="footer-mini-logo"> <span class="brand-name">Valentine Special 2026</span>
+    </div>
+    <div class="legal-info">
+      <p>&copy; 2026 Бүх эрх хуулиар хамгаалагдсан.</p>
+      <p class="ip-notice">Энэхүү вэбсайт нь оюуны өмчөөр хамгаалагдсан бөгөөд зөвшөөрөлгүй хуулбарлахыг хориглоно.</p>
+    </div>
+  </div>
+</footer>
+</body>
+
+</html>
