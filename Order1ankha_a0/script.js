@@ -176,37 +176,41 @@ function stopMusic() {
     show('page4');
 }
 // Жагсаалтад шинэ зүйл нэмэх
-function addItem() {
-    const input = document.getElementById('todoInput');
-    const text = input.value.trim();
-    
-    if (text !== "") {
-        const li = document.createElement('li');
-        li.innerHTML = `✨ ${text}`;
-        document.getElementById('todoList').appendChild(li);
-        input.value = ""; // Оролтыг цэвэрлэх
-    }
+function addItem(type) {
+  let input = document.getElementById(
+    type === 'coupon' ? 'todoInputCoupon' : 'todoInputPlan'
+  );
+
+  let list = document.getElementById(
+    type === 'coupon' ? 'todoListCoupon' : 'todoListPlan'
+  );
+
+  if (!input || !list) return;
+
+  if (input.value.trim() === "") return;
+
+  let li = document.createElement("li");
+  li.textContent = input.value;
+  list.appendChild(li);
+
+  input.value = "";
 }
 
-// Текст файл болгож татаж авах
-function downloadList() {
-    const listItems = document.querySelectorAll('#todoList li');
-    let content = "--- БИДНИЙ ХАМТДАА ХИЙХ ЗҮЙЛС --- \n\n";
-    
-    listItems.forEach((item) => {
-        content += item.innerText + "\n";
-    });
-    
-    const blob = new Blob([content], { type: 'text/plain' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    
-    a.href = url;
-    a.download = 'БИДНИЙ_ХАМТДАА_ХИЙХ_ЗҮЙЛС.txt'; // Файлын нэр
-    a.click();
-    window.URL.revokeObjectURL(url);
+function downloadList(type) {
+  if (!type) return;
+
+  let area = document.getElementById(
+    type === 'coupon' ? 'exportAreaCoupon' : 'exportAreaPlan'
+  );
+
+  if (!area) return;
+
+  let blob = new Blob([area.innerText], { type: "text/plain" });
+  let a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = type === 'coupon' ? "kupon.txt" : "tuluvluguu.txt";
+  a.click();
 }
-let stream = null;
 
 async function openPhotoBooth() {
     show('page12');

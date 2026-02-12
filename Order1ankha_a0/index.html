@@ -94,8 +94,16 @@
           <div class="strip-inner">
             <img src="images/1.jpeg" onclick="openImage(this)">
             <img src="images/2.jpeg" onclick="openImage(this)">
-            <img src="images/3.png" onclick="openImage(this)">
-            <img src="images/4.png" onclick="openImage(this)">
+            <img src="images/3.jpeg" onclick="openImage(this)">
+            <img src="images/4.jpeg" onclick="openImage(this)">
+            <img src="images/5.jpeg" onclick="openImage(this)">
+            <img src="images/6.jpeg" onclick="openImage(this)">
+            <img src="images/7.jpeg" onclick="openImage(this)">
+            <img src="images/8.jpeg" onclick="openImage(this)">
+            <img src="images/9.jpeg" onclick="openImage(this)">
+            <img src="images/10.jpeg" onclick="openImage(this)">
+            <img src="images/11.png" onclick="openImage(this)">
+            <img src="images/12.png" onclick="openImage(this)">
           </div>
         </div>
         <div class="polaroid-frame p-right"><img src="images/2.jpeg" onclick="openImage(this)"></div>
@@ -107,31 +115,39 @@
   <div class="container hidden" id="page6">
     <h1 class="title-pink">Сэтгэлийн үгс 💌</h1>
     <div class="letter-box">
-      <p>Хайртай гүнждээ...</p>
-      <p>өч
-Чи миний амьдралд орж ирсэн тэр өдрөөс хойш бүх зүйл гэрэл гэгээтэй, утга учиртай болсон.
-    Өглөө бүр чиний инээмсэглэлийг харах, орой бүр чиний дуу хоолойг сонсох нь надад хамгийн том аз жаргал.
-
-    Чи бол миний хувьд зүгээр нэг хайртай хүн минь биш, миний хамгийн сайн найз, миний түшиг тулгуур.
-    
-    Ирээдүйд биднийг маш олон сайхан мөчүүд хүлээж байгаа гэдэгт би итгэлтэй байна. 
-    Би үргэлж чинийхээ талд, чамайг дэмжиж, хайрлаж явах болно.
-    
-    Хайртай шүү, Гүнж ээ! ❤️
-    
-    Үнсье! 😘
-      </div>
+      <p>Хайрт solamira-д...</p>
+      <br>
+Чамайг олж харсан тэр өдрүүдээс эхлэн намайг тоох бол уу тоохгүй байх бол уу гэсэн бодлуудаар дүүрч 
+явсаар ангийн шинэ жилээр чамайг бүжгэнд урьсан минь хамгийн их зориг гаргасан мөч байсан. Анхний болзоо 
+үгээр хэлхийн аргагүй сонин болсон ч чамтай хамт байсан гэж бодхоор л маш их баярлаж билээ. Чамайг хүргэж 
+өгсөний дараа сансарийн урдуур би гүйх битгий хэл нисэн хөл газар хүрэхгүй л явсан Эхний өдөр,анхны валентин,
+анхны шинэ он,анхны март, инээд хөөр, баяр баяслаар дүүрэн өдрийн 12 цаг хүртэл багадаж байсан цаг минут секунд 
+бүрээр санасан сарууд энэ бүхнийг туулсаар 1081 хоног болжээ одоо хэдий хол байгаач энэ бүхнийг даван туулж хамт амьдарнаа.
+Хайрт Loml чинь.
+More memories,more love🌸&✨
+    </div>
     <button class="back-btn" onclick="show('page4')">Буцах</button>
   </div>
 
   <div class="container hidden" id="page7">
-    <h1 class="title-pink">Хайрын купонууд</h1>
-    <div class="coupon-grid-simple">
-      <div class="coupon">Кино үзэх эрх 🍿</div>
-      <div class="coupon">Хязгааргүй тэврэлт 🤗</div>
-      <div class="coupon">Зөндөө их дессерт 🍰</div>
+    <div class="main-card">
+      <h1 class="title-pink">Хайрын купонууд ✨</h1>
+      <p class="hint">Эрхийн бичгүүдээ бичээд хадгалаарай</p>
+      <div id="exportAreaCoupon" class="bucket-content">
+        <ul id="todoListCoupon" class="todo-style"></ul>
+      </div>
+
+      <input type="text" id="todoInputCoupon" placeholder="Юу хиймээр байна?">
+      <button class="add-btn" onclick="addItem('coupon')">Нэмэх</button>
+
+      <div class="action-buttons">
+        <button class="add-btn" onclick="downloadList('coupon')" >
+          Файлаар татах 💾
+        </button>
+        <button class="back-btn" onclick="show('page4')">Буцах</button>
+      </div>
+
     </div>
-    <button class="back-btn" onclick="show('page4')">Буцах</button>
   </div>
 
   <div class="container hidden" id="page8">
@@ -172,22 +188,22 @@
     <div class="main-card">
       <h1 class="title-pink">Бидний төлөвлөгөө ✨</h1>
       <p class="hint">Хамтдаа хийх зүйлсээ бичээд хадгалаарай</p>
-      <div id="exportArea" class="bucket-content">
-        <ul id="todoList" class="todo-style">
-        </ul>
+      <div id="exportAreaPlan" class="bucket-content">
+        <ul id="todoListPlan" class="todo-style"></ul>
       </div>
       <div class="input-group">
-        <input type="text" id="todoInput" placeholder="Юу хиймээр байна?">
-        <button class="add-btn" onclick="addItem()">Нэмэх</button>
+        <input type="text" id="todoInputPlan" placeholder="Юу хиймээр байна?">
+<button class="add-btn" onclick="addItem('plan')">Нэмэх</button>
       </div>
       <div class="action-buttons">
-        <button class="download-btn" onclick="downloadList()" style="background: #4CAF50; width: 100%; margin-bottom: 10px;">Файлаар татах 💾</button>
+        <button class="add-btn" onclick="downloadList('plan')">Файлаар татах 💾</button>
         <button class="back-btn" onclick="show('page4')">Буцах</button>
       </div>
     </div>
   </div>
 
   <div class="container hidden" id="page11">
+
     <div class="main-card">
       <h1 class="title-pink">Хайртай шалтгаанууд ❤️</h1>
       <p>1. Чиний инээмсэглэл 🌸</p>
