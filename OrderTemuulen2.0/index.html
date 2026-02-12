@@ -388,7 +388,7 @@ button:active { transform: scale(0.98); }
 <section class="page">
   <div class="box">
     <h2>Бидний хамтдаа өнгөрүүлсэн хугацаа ⏳</h2>
-<p>2023-08-16-ноос хойш…</p>
+<p>2023-08-19-ноос хойш…</p>
 
 
     <div id="countdown" style="display:flex; gap:15px; justify-content:center; margin-top:20px;">
@@ -633,7 +633,7 @@ function updateTimer() {
 
   if (diff < 0) return; // эхлэх өдрөөс өмнө бол юу ч харуулахгүй
 
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24)+1);
   const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
   const minutes = Math.floor((diff / (1000 * 60)) % 60);
   const seconds = Math.floor((diff / 1000) % 60);
